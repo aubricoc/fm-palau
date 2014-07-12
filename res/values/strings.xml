@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FM Palau 2014</string>
+    <string name="app_name_large">Festa Major Palau de Noguera 2014</string>
+    <string name="title_section1">Programa</string>
+    <string name="title_section2">Twitter</string>
+    <string name="title_section3">Section 3</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
