@@ -3,11 +3,9 @@ package cat.aubricoc.palaudenoguera.festamajor.activity;
 import java.util.Locale;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -32,10 +30,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	ViewPager mViewPager;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
+	protected void onCreate() {
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -145,5 +140,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			}
 			return null;
 		}
+	}
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.activity_main;
 	}
 }

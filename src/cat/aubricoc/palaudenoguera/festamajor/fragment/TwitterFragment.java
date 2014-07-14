@@ -16,7 +16,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import cat.aubricoc.palaudenoguera.festamajor.view.PullToRefreshListView;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
 public class TwitterFragment extends Fragment {
