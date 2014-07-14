@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">FM Palau 14</string>
+    <string name="app_title">Palau de Noguera 2014</string>
     <string name="app_name_large">Festa Major Palau de Noguera 2014</string>
     <string name="title_section1">Programa</string>
     <string name="title_section2">Twitter</string>

@@ -83,6 +83,8 @@ public class TwitterFragment extends Fragment {
 
 		listView.setAdapter(listAdapter);
 
+		new GetDataTask().execute();
+		
 		return rootView;
 	}
 

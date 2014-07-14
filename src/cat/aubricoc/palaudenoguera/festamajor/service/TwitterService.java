@@ -55,15 +55,14 @@ public class TwitterService {
 		return INSTANCE;
 	}
 
-	public List<Tweet> search(String... searches) {
+	public List<Tweet> search(String query) {
 
 		if (!isOnline()) {
 			throw new ConnectionException();
 		}
 
 		try {
-			String encodedUrl = SEARCH_URL
-					+ URLEncoder.encode(searches[0], "UTF-8");
+			String encodedUrl = SEARCH_URL + URLEncoder.encode(query, "UTF-8");
 
 			String apiKey = Activity.CURRENT_CONTEXT
 					.getString(R.string.twitter_api_key);
