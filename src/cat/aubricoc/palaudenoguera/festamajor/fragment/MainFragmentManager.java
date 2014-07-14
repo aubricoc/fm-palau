@@ -11,7 +11,7 @@ public class MainFragmentManager {
 	private static final SparseArray<Class<?>> FRAGMENTS_CLASS = new SparseArray<Class<?>>();
 	static {
 		FRAGMENTS_CLASS.put(1, ProgramaFragment.class);
-		FRAGMENTS_CLASS.put(2, ProgramaFragment.class);
+		FRAGMENTS_CLASS.put(2, TwitterFragment.class);
 		FRAGMENTS_CLASS.put(3, ProgramaFragment.class);
 	}
 
