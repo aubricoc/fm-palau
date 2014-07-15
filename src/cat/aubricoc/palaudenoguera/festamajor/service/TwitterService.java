@@ -28,9 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
 import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
@@ -38,6 +35,7 @@ import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.exception.TwitterConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.Constants;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
 public class TwitterService {
@@ -57,7 +55,7 @@ public class TwitterService {
 
 	public List<Tweet> search(String query, String maxId) {
 
-		if (!isOnline()) {
+		if (!Utils.isOnline()) {
 			throw new ConnectionException();
 		}
 
@@ -205,15 +203,5 @@ public class TwitterService {
 		} catch (JSONException e) {
 			return null;
 		}
-	}
-
-	public static boolean isOnline() {
-		ConnectivityManager cm = (ConnectivityManager) Activity.CURRENT_CONTEXT
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-			return true;
-		}
-		return false;
 	}
 }

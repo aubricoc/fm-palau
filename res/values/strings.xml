@@ -7,5 +7,6 @@
     <string name="title_programa">Programa</string>
     <string name="title_twitter">Twitter</string>
     <string name="title_fotos">Fotos</string>
+    <string name="tweet_user_image">User Image</string>
 
 </resources>

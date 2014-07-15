@@ -8,15 +8,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
+import cat.aubricoc.palaudenoguera.festamajor.adapter.TwitterListAdapter;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.service.TwitterService;
@@ -30,7 +31,7 @@ public class TwitterFragment extends Fragment {
 
 	private ListView listView;
 
-	private ArrayAdapter<Tweet> listAdapter;
+	private TwitterListAdapter listAdapter;
 
 	private int preLast;
 
@@ -78,8 +79,7 @@ public class TwitterFragment extends Fragment {
 
 		tweetsList = new LinkedList<Tweet>();
 
-		listAdapter = new ArrayAdapter<Tweet>(getActivity(),
-				android.R.layout.simple_list_item_1, tweetsList);
+		listAdapter = new TwitterListAdapter(getActivity(), tweetsList);
 
 		listView.setAdapter(listAdapter);
 
@@ -111,12 +111,20 @@ public class TwitterFragment extends Fragment {
 				Toast.makeText(Activity.CURRENT_CONTEXT, error,
 						Toast.LENGTH_SHORT).show();
 			} else {
+				int news = 0;
+				int old = 0;
 				for (int iter = result.size() - 1; iter >= 0; iter--) {
 					Tweet tweet = result.get(iter);
-					if (!tweetsList.contains(tweet)) {
+					if (tweetsList.contains(tweet)) {
+						Tweet tweetOld = tweetsList.get(tweetsList.indexOf(tweet));
+						tweetOld.setDate(tweet.getDate());
+						old++;
+					} else {
 						tweetsList.addFirst(tweet);
+						news++;
 					}
 				}
+				Log.i(Constants.PROJECT_NAME, "New tweets: " + news + ". Old: " + old + ". Total: " + tweetsList.size());
 				listAdapter.notifyDataSetChanged();
 			}
 			refreshLayout.setRefreshing(false);
