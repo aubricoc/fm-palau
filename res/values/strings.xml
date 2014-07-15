@@ -4,10 +4,8 @@
     <string name="app_name">FM Palau 14</string>
     <string name="app_title">Palau de Noguera 2014</string>
     <string name="app_name_large">Festa Major Palau de Noguera 2014</string>
-    <string name="title_section1">Programa</string>
-    <string name="title_section2">Twitter</string>
-    <string name="title_section3">Fotos</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_programa">Programa</string>
+    <string name="title_twitter">Twitter</string>
+    <string name="title_fotos">Fotos</string>
 
 </resources>

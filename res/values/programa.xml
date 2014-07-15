@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dia_29">Divendres, dia 29 d\'agost</string>
+    <string name="dia_30">Dissabte, dia 30 d\'agost</string>
+    <string name="dia_31">Diumenge, dia 31 d\'agost</string>
+    <string name="dia_2">Dimarts, dia 2 de setembre</string>
+    
+    <string name="acte_1_hora">01:00</string>
+    <string name="acte_1_descripcio">Ball de nit amb el conjunt:</string>
+    <string name="acte_1_grup">Kirtana</string>
+    
+    <string name="acte_2_hora">18:00</string>
+    <string name="acte_2_descripcio">Tallers i jocs per la mainada</string>
+    <string name="acte_2_grup">Kirtana</string>
+    
+    <string name="acte_3_hora">00:30</string>
+    <string name="acte_3_descripcio">Ball de Festa Major amb el grup:</string>
+    <string name="acte_3_grup">Fènix</string>
+    
+    <string name="acte_4_descripcio">i versions amb:</string>
+    <string name="acte_4_grup">La Banda del Coche Rojo</string>
+    
+    <string name="acte_5_hora">13:00</string>
+    <string name="acte_5_descripcio">Missa de Festa Major</string>
+    
+    <string name="acte_6_hora">14:00</string>
+    <string name="acte_6_descripcio">Gran Plega</string>
+    
+    <string name="acte_7_hora">19:30</string>
+    <string name="acte_7_descripcio">Ball de tarda amb el grup:</string>
+    <string name="acte_7_grup">Maracaibo</string>
+    
+    <string name="acte_8_descripcio">Durant el ball de tarda, Ballada del</string>
+    <string name="acte_8_grup">Contrapàs de Palau de Noguera</string>
+</resources>

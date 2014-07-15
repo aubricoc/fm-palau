@@ -13,7 +13,7 @@
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_section2" />
+        android:text="@string/title_twitter" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/tweets_refresh"

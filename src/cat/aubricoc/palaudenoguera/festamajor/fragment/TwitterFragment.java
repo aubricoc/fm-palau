@@ -84,7 +84,7 @@ public class TwitterFragment extends Fragment {
 		listView.setAdapter(listAdapter);
 
 		new GetDataTask().execute();
-		
+
 		return rootView;
 	}
 
@@ -96,7 +96,8 @@ public class TwitterFragment extends Fragment {
 		protected List<Tweet> doInBackground(Void... params) {
 			try {
 				List<Tweet> tweets = TwitterService.getInstance().search(
-						twitterQuery);
+						twitterQuery, null);
+				
 				return tweets;
 			} catch (ConnectionException e) {
 				error = e.getMessage();
@@ -130,7 +131,7 @@ public class TwitterFragment extends Fragment {
 		protected List<Tweet> doInBackground(Void... params) {
 			try {
 				List<Tweet> tweets = TwitterService.getInstance().search(
-						twitterQuery);
+						twitterQuery, tweetsList.getLast().getId());
 				return tweets;
 			} catch (ConnectionException e) {
 				error = e.getMessage();

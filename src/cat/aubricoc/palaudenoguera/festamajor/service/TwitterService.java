@@ -44,7 +44,7 @@ public class TwitterService {
 
 	private static final TwitterService INSTANCE = new TwitterService();
 	private static final String TOKEN_URL = "https://api.twitter.com/oauth2/token";
-	private static final String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json?result_type=recent&q=";
+	private static final String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json";
 	private static final String URL_TWEET = "https://twitter.com/%s/status/%s";
 
 	private TwitterService() {
@@ -55,15 +55,20 @@ public class TwitterService {
 		return INSTANCE;
 	}
 
-	public List<Tweet> search(String query) {
+	public List<Tweet> search(String query, String maxId) {
 
 		if (!isOnline()) {
 			throw new ConnectionException();
 		}
 
 		try {
-			String encodedUrl = SEARCH_URL + URLEncoder.encode(query, "UTF-8");
-
+			String encodedUrl = SEARCH_URL;
+			encodedUrl += "?result_type=recent";
+			if (maxId != null) {
+				encodedUrl += "&max_id=" + maxId;
+			}
+			encodedUrl += "&q=" + URLEncoder.encode(query, "UTF-8");
+			
 			String apiKey = Activity.CURRENT_CONTEXT
 					.getString(R.string.twitter_api_key);
 			String apiSecret = Activity.CURRENT_CONTEXT
@@ -158,20 +163,24 @@ public class TwitterService {
 			for (int iter = 0; iter < jsonMessages.length(); iter++) {
 				JSONObject jsonMessage = jsonMessages.getJSONObject(iter);
 				Tweet tweet = new Tweet();
-				tweet.setId(getString(jsonMessage, "id_str"));
-				tweet.setMessage(getString(jsonMessage, "text"));
-				tweet.setDate(getTwitterDate(jsonMessage
-						.getString("created_at")));
-				JSONObject user = jsonMessage.getJSONObject("user");
-				tweet.setUser(getString(user, "name"));
-				tweet.setAlias(getString(user, "screen_name"));
-				tweet.setUserImage(getString(user, "profile_image_url"));
-				tweet.setLink(String.format(URL_TWEET, tweet.getAlias(),
-						tweet.getId()));
-				if (tweet.getAlias() != null) {
-					tweet.setAlias("@" + tweet.getAlias());
+				
+				if (jsonMessage.isNull("retweeted_status")) {
+				
+					tweet.setId(getString(jsonMessage, "id_str"));
+					tweet.setMessage(getString(jsonMessage, "text"));
+					tweet.setDate(getTwitterDate(jsonMessage
+							.getString("created_at")));
+					JSONObject user = jsonMessage.getJSONObject("user");
+					tweet.setUser(getString(user, "name"));
+					tweet.setAlias(getString(user, "screen_name"));
+					tweet.setUserImage(getString(user, "profile_image_url"));
+					tweet.setLink(String.format(URL_TWEET, tweet.getAlias(),
+							tweet.getId()));
+					if (tweet.getAlias() != null) {
+						tweet.setAlias("@" + tweet.getAlias());
+					}
+					tweets.add(tweet);
 				}
-				tweets.add(tweet);
 			}
 			return tweets;
 		} catch (JSONException e) {
