@@ -2,6 +2,7 @@ package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
 import java.util.Date;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Html;
@@ -31,25 +32,31 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 
 		Tweet tweet = getItem(iter);
 
+		ViewHolder holder;
 		if (view == null) {
+
 			view = layoutInflater.inflate(R.layout.list_item_tweet, null);
+			holder = new ViewHolder();
+			holder.userImage = (ImageView) view
+					.findViewById(R.id.tweet_user_image);
+			holder.user = (TextView) view.findViewById(R.id.tweet_user);
+			holder.userAlias = (TextView) view
+					.findViewById(R.id.tweet_user_alias);
+			holder.message = (TextView) view.findViewById(R.id.tweet_message);
+			holder.date = (TextView) view.findViewById(R.id.tweet_date);
 
-			new LoadImageViewAsyncTask(
-					(ImageView) view.findViewById(R.id.tweet_user_image))
-					.execute(tweet.getUserImage());
-
-			((TextView) view.findViewById(R.id.tweet_user)).setText(tweet
-					.getUser());
-
-			((TextView) view.findViewById(R.id.tweet_user_alias)).setText(tweet
-					.getAlias());
-
-			((TextView) view.findViewById(R.id.tweet_message)).setText(Html
-					.fromHtml(tweet.getMessage()));
+			view.setTag(holder);
+		} else {
+			holder = (ViewHolder) view.getTag();
 		}
 
-		((TextView) view.findViewById(R.id.tweet_date))
-				.setText(getDateDifferenceFromNow(tweet.getDate()));
+		new LoadImageViewAsyncTask(holder.userImage).execute(tweet
+				.getUserImage());
+
+		holder.user.setText(tweet.getUser());
+		holder.userAlias.setText(tweet.getAlias());
+		holder.message.setText(Html.fromHtml(tweet.getMessage()));
+		holder.date.setText(getDateDifferenceFromNow(tweet.getDate()));
 
 		return view;
 	}
@@ -71,5 +78,13 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 			result = DateFormat.getDateFormat(getContext()).format(date);
 		}
 		return result;
+	}
+
+	private class ViewHolder {
+		TextView date;
+		TextView message;
+		TextView userAlias;
+		TextView user;
+		ImageView userImage;
 	}
 }

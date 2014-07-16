@@ -60,6 +60,8 @@ public class TwitterService {
 		}
 
 		try {
+			Log.i(Constants.PROJECT_NAME, "Searching tweets '" + query + "'" + (maxId == null ? "" : ", maxId=" + maxId));
+			
 			String encodedUrl = SEARCH_URL;
 			encodedUrl += "?result_type=recent";
 			if (maxId != null) {
@@ -95,7 +97,7 @@ public class TwitterService {
 
 			String result = getResponseBody(httpGet);
 
-			return parseTweets(result);
+			return parseTweets(result, query, maxId);
 		} catch (UnsupportedEncodingException e) {
 			throw new TwitterConnectionException(e);
 		}
@@ -153,18 +155,20 @@ public class TwitterService {
 		throw new TwitterConnectionException();
 	}
 
-	private List<Tweet> parseTweets(String json) {
+	private List<Tweet> parseTweets(String json, String query, String maxId) {
 		try {
 			List<Tweet> tweets = new ArrayList<Tweet>();
 			JSONObject jsonObject = new JSONObject(json);
 			JSONArray jsonMessages = jsonObject.getJSONArray("statuses");
+			String lastId = null;
 			for (int iter = 0; iter < jsonMessages.length(); iter++) {
 				JSONObject jsonMessage = jsonMessages.getJSONObject(iter);
 				Tweet tweet = new Tweet();
-				
+				tweet.setId(getString(jsonMessage, "id_str"));
+				if (!tweet.getId().equals(maxId)) {
+					lastId = tweet.getId();
+				}
 				if (jsonMessage.isNull("retweeted_status")) {
-				
-					tweet.setId(getString(jsonMessage, "id_str"));
 					tweet.setMessage(getString(jsonMessage, "text"));
 					tweet.setDate(getTwitterDate(jsonMessage
 							.getString("created_at")));
@@ -179,6 +183,18 @@ public class TwitterService {
 					}
 					tweets.add(tweet);
 				}
+			}
+			boolean searchMore = false;
+			if (lastId != null) {
+				if (tweets.isEmpty() && maxId == null) {
+					searchMore = true;
+				} else if (tweets.size() == 1 && maxId != null) {
+					searchMore = true;
+				}
+			}
+			if (searchMore) {
+				Log.i(Constants.PROJECT_NAME, "Only retweets. Searching more...");
+				tweets = search(query, lastId);
 			}
 			return tweets;
 		} catch (JSONException e) {

@@ -13,6 +13,7 @@ import org.apache.http.util.EntityUtils;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
@@ -55,6 +56,7 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 		if (result != null) {
 			imageView.setImageDrawable(Drawable.createFromStream(
 					new ByteArrayInputStream(result), null));
+			imageView.setVisibility(View.VISIBLE);
 		}
 	}
 }

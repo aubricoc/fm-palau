@@ -1,6 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.fragment;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
@@ -25,7 +25,7 @@ import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
 public class TwitterFragment extends Fragment {
 
-	private LinkedList<Tweet> tweetsList;
+	private List<Tweet> tweetsList;
 
 	private SwipeRefreshLayout refreshLayout;
 
@@ -36,6 +36,8 @@ public class TwitterFragment extends Fragment {
 	private int preLast;
 
 	private String twitterQuery;
+	
+	private Tweet last;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,14 +72,14 @@ public class TwitterFragment extends Fragment {
 				final int lastItem = firstVisibleItem + visibleItemCount;
 				if (lastItem == totalItemCount) {
 					if (preLast != lastItem) {
-						new GetDataLastTask().execute();
+						new GetDataLastTask().execute(last.getId());
 						preLast = lastItem;
 					}
 				}
 			}
 		});
 
-		tweetsList = new LinkedList<Tweet>();
+		tweetsList = new ArrayList<Tweet>();
 
 		listAdapter = new TwitterListAdapter(getActivity(), tweetsList);
 
@@ -88,15 +90,15 @@ public class TwitterFragment extends Fragment {
 		return rootView;
 	}
 
-	private class GetDataTask extends AsyncTask<Void, Void, List<Tweet>> {
+	private class GetDataTask extends AsyncTask<String, Void, List<Tweet>> {
 
-		private String error;
+		protected String error;
 
 		@Override
-		protected List<Tweet> doInBackground(Void... params) {
+		protected List<Tweet> doInBackground(String... params) {
 			try {
 				List<Tweet> tweets = TwitterService.getInstance().search(
-						twitterQuery, null);
+						twitterQuery, params.length == 0 ? null : params[0]);
 				
 				return tweets;
 			} catch (ConnectionException e) {
@@ -112,40 +114,29 @@ public class TwitterFragment extends Fragment {
 						Toast.LENGTH_SHORT).show();
 			} else {
 				int news = 0;
-				int old = 0;
+				int olds = 0;
 				for (int iter = result.size() - 1; iter >= 0; iter--) {
 					Tweet tweet = result.get(iter);
+					if (last == null) {
+						last = tweet;
+					}
 					if (tweetsList.contains(tweet)) {
 						Tweet tweetOld = tweetsList.get(tweetsList.indexOf(tweet));
 						tweetOld.setDate(tweet.getDate());
-						old++;
+						olds++;
 					} else {
-						tweetsList.addFirst(tweet);
+						tweetsList.add(0, tweet);
 						news++;
 					}
 				}
-				Log.i(Constants.PROJECT_NAME, "New tweets: " + news + ". Old: " + old + ". Total: " + tweetsList.size());
+				Log.i(Constants.PROJECT_NAME, "New tweets: " + news + ". Old: " + olds + ". Total: " + tweetsList.size());
 				listAdapter.notifyDataSetChanged();
 			}
 			refreshLayout.setRefreshing(false);
 		}
 	}
 
-	private class GetDataLastTask extends AsyncTask<Void, Void, List<Tweet>> {
-
-		private String error;
-
-		@Override
-		protected List<Tweet> doInBackground(Void... params) {
-			try {
-				List<Tweet> tweets = TwitterService.getInstance().search(
-						twitterQuery, tweetsList.getLast().getId());
-				return tweets;
-			} catch (ConnectionException e) {
-				error = e.getMessage();
-				return null;
-			}
-		}
+	private class GetDataLastTask extends GetDataTask {
 
 		@Override
 		protected void onPostExecute(List<Tweet> result) {
@@ -153,11 +144,20 @@ public class TwitterFragment extends Fragment {
 				Toast.makeText(Activity.CURRENT_CONTEXT, error,
 						Toast.LENGTH_SHORT).show();
 			} else {
+				int news = 0;
+				int olds = 0;
 				for (Tweet tweet : result) {
-					if (!tweetsList.contains(tweet)) {
+					if (tweetsList.contains(tweet)) {
+						Tweet tweetOld = tweetsList.get(tweetsList.indexOf(tweet));
+						tweetOld.setDate(tweet.getDate());
+						olds++;
+					} else {
 						tweetsList.add(tweet);
+						last = tweet;
+						news++;
 					}
 				}
+				Log.i(Constants.PROJECT_NAME, "New tweets: " + news + ". Old: " + olds + ". Total: " + tweetsList.size());
 				listAdapter.notifyDataSetChanged();
 			}
 			refreshLayout.setRefreshing(false);
