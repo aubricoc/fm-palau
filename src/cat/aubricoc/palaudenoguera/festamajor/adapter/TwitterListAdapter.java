@@ -50,8 +50,12 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		new LoadImageViewAsyncTask(holder.userImage).execute(tweet
-				.getUserImage());
+		if (tweet.getImage() == null) {
+			new LoadImageViewAsyncTask(holder.userImage, tweet).execute(tweet
+					.getUserImage());
+		} else {
+			holder.userImage.setImageDrawable(tweet.getImage());
+		}
 
 		holder.user.setText(tweet.getUser());
 		holder.userAlias.setText(tweet.getAlias());

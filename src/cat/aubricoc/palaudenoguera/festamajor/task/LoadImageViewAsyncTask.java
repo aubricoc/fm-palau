@@ -10,20 +10,24 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
+import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 
+	private Tweet tweet;
+
 	private ImageView imageView;
 
-	public LoadImageViewAsyncTask(ImageView imageView) {
+	public LoadImageViewAsyncTask(ImageView imageView, Tweet tweet) {
 		this.imageView = imageView;
+		this.tweet = tweet;
 	}
-	
+
 	@Override
 	protected void onPreExecute() {
 		imageView.setVisibility(View.INVISIBLE);
@@ -31,7 +35,7 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 
 	@Override
 	protected byte[] doInBackground(String... params) {
-		
+
 		if (!Utils.isOnline()) {
 			return null;
 		}
@@ -59,8 +63,10 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 	@Override
 	protected void onPostExecute(byte[] result) {
 		if (result != null) {
-			imageView.setImageDrawable(Drawable.createFromStream(
-					new ByteArrayInputStream(result), null));
+			Drawable drawable = Drawable.createFromStream(
+					new ByteArrayInputStream(result), null);
+			tweet.setImage(drawable);
+			imageView.setImageDrawable(drawable);
 			imageView.setVisibility(View.VISIBLE);
 		}
 	}

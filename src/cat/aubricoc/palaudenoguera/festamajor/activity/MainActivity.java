@@ -3,11 +3,15 @@ package cat.aubricoc.palaudenoguera.festamajor.activity;
 import java.util.Locale;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.MainFragmentManager;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
@@ -34,7 +38,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		setTitle(R.string.app_title);
-		
+
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -107,7 +111,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			// Show 3 total pages.
 			return 3;
 		}
-
+		
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
@@ -121,6 +125,49 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			}
 			return null;
 		}
+		
+		public String getInfo(int position) {
+			switch (position) {
+			case 0:
+				return getString(R.string.info_programa);
+			case 1:
+				return getString(R.string.info_twitter);
+			case 2:
+				return getString(R.string.info_fotos);
+			}
+			return null;
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.info:
+			showInfo();
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	public void showInfo() {
+		int position = mViewPager.getCurrentItem();
+		String infoText = mSectionsPagerAdapter.getInfo(position);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.info);
+		builder.setIcon(R.drawable.ic_dialog_about);
+		builder.setMessage(infoText);
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 
 	@Override

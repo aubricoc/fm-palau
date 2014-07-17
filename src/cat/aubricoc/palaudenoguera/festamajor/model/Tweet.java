@@ -2,6 +2,8 @@ package cat.aubricoc.palaudenoguera.festamajor.model;
 
 import java.util.Date;
 
+import android.graphics.drawable.Drawable;
+
 public class Tweet {
 
 	private String id;
@@ -17,6 +19,8 @@ public class Tweet {
 	private Date date;
 	
 	private String link;
+	
+	private Drawable image;
 
 	public String getId() {
 		return id;
@@ -72,6 +76,14 @@ public class Tweet {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public Drawable getImage() {
+		return image;
+	}
+
+	public void setImage(Drawable image) {
+		this.image = image;
 	}
 
 	@Override
