@@ -23,10 +23,15 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 	public LoadImageViewAsyncTask(ImageView imageView) {
 		this.imageView = imageView;
 	}
+	
+	@Override
+	protected void onPreExecute() {
+		imageView.setVisibility(View.INVISIBLE);
+	}
 
 	@Override
 	protected byte[] doInBackground(String... params) {
-
+		
 		if (!Utils.isOnline()) {
 			return null;
 		}
