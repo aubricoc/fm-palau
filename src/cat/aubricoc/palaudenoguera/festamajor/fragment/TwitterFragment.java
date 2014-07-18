@@ -1,6 +1,5 @@
 package cat.aubricoc.palaudenoguera.festamajor.fragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
@@ -21,13 +20,12 @@ import android.widget.Toast;
 import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
 import cat.aubricoc.palaudenoguera.festamajor.adapter.TwitterListAdapter;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
+import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.service.TwitterService;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
 public class TwitterFragment extends Fragment {
-
-	private List<Tweet> tweetsList;
 
 	private SwipeRefreshLayout refreshLayout;
 
@@ -38,9 +36,9 @@ public class TwitterFragment extends Fragment {
 	private Button retryButton;
 
 	private TextView noConnectionText;
-	
+
 	private TextView noTweetsText;
-	
+
 	private View loading;
 
 	private int preLast;
@@ -73,7 +71,7 @@ public class TwitterFragment extends Fragment {
 				new GetDataTask().execute();
 			}
 		});
-		
+
 		refreshLayout.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
@@ -101,31 +99,36 @@ public class TwitterFragment extends Fragment {
 			}
 		});
 
-		tweetsList = new ArrayList<Tweet>();
-
-		listAdapter = new TwitterListAdapter(getActivity(), tweetsList);
+		listAdapter = new TwitterListAdapter(getActivity(),
+				DataContainer.getTweets());
 
 		listView.setAdapter(listAdapter);
 
-		new GetDataTask().execute();
+		if (DataContainer.getTweets().isEmpty()) {
+			new GetDataTask().execute();
+		} else {
+			last = DataContainer.getTweets().get(
+					DataContainer.getTweets().size() - 1);
+			showTweets();
+		}
 
 		return rootView;
 	}
-	
+
 	private void showError() {
 		refreshLayout.setVisibility(View.GONE);
 		noConnectionText.setVisibility(View.VISIBLE);
 		retryButton.setVisibility(View.VISIBLE);
 		noTweetsText.setVisibility(View.GONE);
 	}
-	
+
 	private void showTweets() {
 		refreshLayout.setVisibility(View.VISIBLE);
 		noConnectionText.setVisibility(View.GONE);
 		retryButton.setVisibility(View.GONE);
 		noTweetsText.setVisibility(View.GONE);
 	}
-	
+
 	private void showNoTweets() {
 		refreshLayout.setVisibility(View.GONE);
 		noConnectionText.setVisibility(View.GONE);
@@ -136,12 +139,12 @@ public class TwitterFragment extends Fragment {
 	private class GetDataTask extends AsyncTask<String, Void, List<Tweet>> {
 
 		protected String error;
-		
+
 		@Override
 		protected void onPreExecute() {
 			loading.setVisibility(View.VISIBLE);
 		}
-		
+
 		@Override
 		protected List<Tweet> doInBackground(String... params) {
 			try {
@@ -158,14 +161,14 @@ public class TwitterFragment extends Fragment {
 		@Override
 		protected void onPostExecute(List<Tweet> result) {
 			if (result == null) {
-				if (tweetsList.isEmpty()) {
+				if (DataContainer.getTweets().isEmpty()) {
 					showError();
 				} else {
 					Toast.makeText(Activity.CURRENT_CONTEXT, error,
 							Toast.LENGTH_SHORT).show();
 				}
 			} else {
-				if (tweetsList.isEmpty() && result.isEmpty()) {
+				if (DataContainer.getTweets().isEmpty() && result.isEmpty()) {
 					showNoTweets();
 				} else {
 					showTweets();
@@ -183,11 +186,12 @@ public class TwitterFragment extends Fragment {
 				if (last == null) {
 					last = tweet;
 				}
-				if (tweetsList.contains(tweet)) {
-					Tweet tweetOld = tweetsList.get(tweetsList.indexOf(tweet));
+				if (DataContainer.getTweets().contains(tweet)) {
+					Tweet tweetOld = DataContainer.getTweets().get(
+							DataContainer.getTweets().indexOf(tweet));
 					tweetOld.setDate(tweet.getDate());
 				} else {
-					tweetsList.add(0, tweet);
+					DataContainer.getTweets().add(0, tweet);
 				}
 			}
 		}
@@ -198,11 +202,12 @@ public class TwitterFragment extends Fragment {
 		@Override
 		protected void addTweets(List<Tweet> result) {
 			for (Tweet tweet : result) {
-				if (tweetsList.contains(tweet)) {
-					Tweet tweetOld = tweetsList.get(tweetsList.indexOf(tweet));
+				if (DataContainer.getTweets().contains(tweet)) {
+					Tweet tweetOld = DataContainer.getTweets().get(
+							DataContainer.getTweets().indexOf(tweet));
 					tweetOld.setDate(tweet.getDate());
 				} else {
-					tweetsList.add(tweet);
+					DataContainer.getTweets().add(tweet);
 					last = tweet;
 				}
 			}

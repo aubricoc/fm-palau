@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
+import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 
@@ -68,6 +69,7 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 			tweet.setImage(drawable);
 			imageView.setImageDrawable(drawable);
 			imageView.setVisibility(View.VISIBLE);
+			DataContainer.getUserImages().put(tweet.getAlias(), drawable);
 		}
 	}
 }

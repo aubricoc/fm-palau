@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
@@ -50,10 +52,16 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		if (tweet.getImage() == null) {
+		Drawable image = tweet.getImage();
+		if (image == null) {
+			image = DataContainer.getUserImages().get(tweet.getAlias());
+		}
+		
+		if (image == null) {
 			new LoadImageViewAsyncTask(holder.userImage, tweet).execute(tweet
 					.getUserImage());
 		} else {
+			holder.userImage.setVisibility(View.VISIBLE);
 			holder.userImage.setImageDrawable(tweet.getImage());
 		}
 
