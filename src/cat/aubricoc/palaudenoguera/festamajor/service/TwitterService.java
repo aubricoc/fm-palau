@@ -33,8 +33,8 @@ import android.util.Log;
 import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.exception.TwitterConnectionException;
-import cat.aubricoc.palaudenoguera.festamajor.fragment.Constants;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 

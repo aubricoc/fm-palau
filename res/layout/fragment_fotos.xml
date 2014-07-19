@@ -9,18 +9,31 @@
         android:id="@+id/no_photos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/info_twitter"
-        android:visibility="gone" />
+        android:text="@string/info_twitter" />
 
     <GridView
         android:id="@+id/photos_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" android:columnWidth="100dp" 
-    android:numColumns="auto_fit"
-    android:stretchMode="columnWidth" 
-    android:gravity="center"
-        >
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:visibility="gone" >
     </GridView>
+
+    <RelativeLayout
+        android:id="@+id/loading_fotos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucid"
+        android:gravity="center"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -35,9 +35,9 @@ public class DataContainer {
 		return userImages;
 	}
 
-	public static void preparePhotos(Context context) {
+	public static boolean preparePhotos(Context context) {
 		if (photos != null) {
-			return;
+			return true;
 		}
 		photos = new ArrayList<Photo>();
 		try {
@@ -47,28 +47,12 @@ public class DataContainer {
 					photos.add(new Photo((Integer) field.get(null), field
 							.getName(), context));
 				}
-			}for (Field field : fields) {
-				if (field.getName().startsWith("img_")) {
-					photos.add(new Photo((Integer) field.get(null), field
-							.getName(), context));
-				}
-			}for (Field field : fields) {
-				if (field.getName().startsWith("img_")) {
-					photos.add(new Photo((Integer) field.get(null), field
-							.getName(), context));
-				}
-			}for (Field field : fields) {
-				if (field.getName().startsWith("img_")) {
-					photos.add(new Photo((Integer) field.get(null), field
-							.getName(), context));
-				}
-			}for (Field field : fields) {
-				if (field.getName().startsWith("img_")) {
-					photos.add(new Photo((Integer) field.get(null), field
-							.getName(), context));
-				}
+			}
+			if (photos.isEmpty()) {
+				return false;
 			}
 			Collections.sort(photos);
+			return true;
 		} catch (IllegalAccessException e) {
 			throw new IllegalStateException(e);
 		} catch (IllegalArgumentException e) {

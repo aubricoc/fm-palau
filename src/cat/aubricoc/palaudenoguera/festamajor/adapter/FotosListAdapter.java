@@ -40,8 +40,9 @@ public class FotosListAdapter extends BaseAdapter {
 			imageView = (ImageView) convertView;
 		}
 
-		imageView.setImageBitmap(DataContainer.getPhotos().get(position)
-				.getBitmap());
+//		imageView.setImageBitmap(DataContainer.getPhotos().get(position).getBitmap());
+//		imageView.setImageResource(DataContainer.getPhotos().get(position).getResourceId());
+		imageView.setImageDrawable(DataContainer.getPhotos().get(position).getDrawable());
 		
 		return imageView;
 	}

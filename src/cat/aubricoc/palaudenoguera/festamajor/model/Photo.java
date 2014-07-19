@@ -1,8 +1,7 @@
 package cat.aubricoc.palaudenoguera.festamajor.model;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 
 public class Photo implements Comparable<Photo> {
 
@@ -10,27 +9,24 @@ public class Photo implements Comparable<Photo> {
 	
 	private String name;
 
-	private Bitmap bitmap;
+	private Drawable drawable;
 
 	public Photo(int resourceId, String name, Context context) {
 		this.resourceId = resourceId;
 		this.name = name;
-		prepareBitmap(context);
+		prepareDrawable(context);
 	}
 
 	public int getResourceId() {
 		return resourceId;
 	}
 
-	public Bitmap getBitmap() {
-		return bitmap;
+	public Drawable getDrawable() {
+		return drawable;
 	}
 
-	private void prepareBitmap(Context context) {
-		Bitmap full = BitmapFactory.decodeResource(context.getResources(),
-				resourceId);
-		int nh = (int) (full.getHeight() * (256.0 / full.getWidth()));
-		bitmap = Bitmap.createScaledBitmap(full, 256, nh, true);
+	private void prepareDrawable(Context context) {
+		drawable = context.getResources().getDrawable(resourceId);
 	}
 
 	@Override
