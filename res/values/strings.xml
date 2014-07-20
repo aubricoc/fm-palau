@@ -14,5 +14,7 @@
     <string name="info_fotos">Durant la festa major, cada dia es publicarán les fotos del dia anterior.\n\nPer a que apareguin es indispensable actualitzar l\'aplicació.</string>
     <string name="retry">Reintentar</string>
     <string name="photo">Foto</string>
+    <string name="share">Compartir</string>
+    <string name="send_to">Compartir utilitzant&#8230;</string>
 
 </resources>

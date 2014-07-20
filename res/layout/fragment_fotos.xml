@@ -1,15 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="cat.aubricoc.palaudenoguera.festamajor.fragment.FotosFragment" >
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/no_photos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/info_twitter" />
+        android:text="@string/info_fotos" />
 
     <GridView
         android:id="@+id/photos_grid"
