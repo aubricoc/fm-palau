@@ -216,6 +216,8 @@ public class EntityInfo {
 			} else if (type.equals(BigDecimal.class)
 					|| type.equals(Float.class) || type.equals(Double.class)) {
 				databaseType = "real";
+			} else if (type.equals(byte[].class)) {
+				databaseType = "blob";
 			} else if (type.equals(entityClass)) {
 				fk = true;
 				foreignKeyTo = EntityInfo.this;

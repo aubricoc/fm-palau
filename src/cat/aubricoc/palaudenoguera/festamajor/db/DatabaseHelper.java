@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
+import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -21,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Log.i(Constants.PROJECT_NAME, "Create DB...");
 
 		List<String> createTables = DatabaseReflection.getInstance()
-				.prepareCreateTables(Tweet.class);
+				.prepareCreateTables(Tweet.class, TwitterUser.class);
 
 		for (String sql : createTables) {
 			db.execSQL(sql);

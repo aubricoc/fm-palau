@@ -14,8 +14,10 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
+import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
+import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
@@ -64,6 +66,10 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 	@Override
 	protected void onPostExecute(byte[] result) {
 		if (result != null) {
+			TwitterUser twitterUser = new TwitterUser();
+			twitterUser.setAlias(tweet.getAlias());
+			twitterUser.setImage(result);
+			TwitterUserDao.getInstance().createIfNotExists(twitterUser);
 			Drawable drawable = Drawable.createFromStream(
 					new ByteArrayInputStream(result), null);
 			tweet.setImage(drawable);

@@ -1,5 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.model;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
 public class DataContainer {
@@ -57,6 +59,15 @@ public class DataContainer {
 			throw new IllegalStateException(e);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalStateException(e);
+		}
+	}
+
+	public static void prepareUserImages(Context context) {
+		List<TwitterUser> users = TwitterUserDao.getInstance().getAll();
+		for (TwitterUser user : users) {
+			Drawable drawable = Drawable.createFromStream(
+					new ByteArrayInputStream(user.getImage()), null);
+			userImages.put(user.getAlias(), drawable);
 		}
 	}
 }

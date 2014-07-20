@@ -32,7 +32,7 @@ public class Tweet {
 
 	@Transient
 	private Drawable image;
-
+	
 	public String getId() {
 		return id;
 	}

@@ -54,6 +54,9 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 
 		Drawable image = tweet.getImage();
 		if (image == null) {
+			if (DataContainer.getUserImages().isEmpty()) {
+				DataContainer.prepareUserImages(getContext());
+			}
 			image = DataContainer.getUserImages().get(tweet.getAlias());
 		}
 		
@@ -61,6 +64,7 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 			new LoadImageViewAsyncTask(holder.userImage, tweet).execute(tweet
 					.getUserImage());
 		} else {
+			tweet.setImage(image);
 			holder.userImage.setVisibility(View.VISIBLE);
 			holder.userImage.setImageDrawable(tweet.getImage());
 		}

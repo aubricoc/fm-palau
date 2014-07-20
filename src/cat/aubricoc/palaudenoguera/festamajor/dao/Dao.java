@@ -392,6 +392,10 @@ public abstract class Dao<T, K> {
 						Double value = cursor.getDouble(iter);
 						val = fromDoubleTo(fieldInfo.getField().getType(),
 								value);
+					} else if (fieldInfo.getDatabaseType().equals("blob")) {
+						byte[] value = cursor.getBlob(iter);
+						val = fromByteArrayTo(fieldInfo.getField().getType(),
+								value);
 					} else {
 						throw new IllegalArgumentException(
 								"Unkown database type '"
@@ -473,6 +477,13 @@ public abstract class Dao<T, K> {
 						Double value = null;
 						if (val != null) {
 							value = toDoubleFrom(
+									fieldInfo.getField().getType(), val);
+						}
+						values.put(fieldInfo.getColumnName(), value);
+					} else if (fieldInfo.getDatabaseType().equals("blob")) {
+						byte[] value = null;
+						if (val != null) {
+							value = toByteArrayFrom(
 									fieldInfo.getField().getType(), val);
 						}
 						values.put(fieldInfo.getColumnName(), value);
@@ -584,6 +595,27 @@ public abstract class Dao<T, K> {
 		throw new IllegalArgumentException("Unkown java type '"
 				+ type.getSimpleName() + "' matching database type 'real'.");
 	}
+	
+	protected Object fromByteArrayTo(Class<?> type, byte[] value) {
+		if (type.equals(byte[].class)) {
+			return fromByteArrayToByteArray(value);
+		} else if (type.isAnnotationPresent(Entity.class)) {
+			try {
+				EntityInfo fkEntityInfo = EntityInfo.getEntityInfo(type);
+				Object fkObject = type.newInstance();
+				Field fkPkField = fkEntityInfo.getPK().getField();
+				Object id = fromByteArrayTo(fkPkField.getType(), value);
+				fkPkField.setAccessible(true);
+				fkPkField.set(fkObject, id);
+				return fkObject;
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Can't convert '" + value
+						+ "' to entity '" + type.getSimpleName() + "'", e);
+			}
+		}
+		throw new IllegalArgumentException("Unkown java type '"
+				+ type.getSimpleName() + "' matching database type 'blob'.");
+	}
 
 	protected String toStringFrom(Class<?> type, Object value) {
 		if (type.equals(String.class)) {
@@ -660,6 +692,25 @@ public abstract class Dao<T, K> {
 		}
 		throw new IllegalArgumentException("Unkown java type '"
 				+ type.getSimpleName() + "' matching database type 'real'.");
+	}
+	
+	protected byte[] toByteArrayFrom(Class<?> type, Object value) {
+		if (type.equals(byte[].class)) {
+			return fromByteArrayToByteArray(value);
+		} else if (type.isAnnotationPresent(Entity.class)) {
+			try {
+				EntityInfo fkEntityInfo = EntityInfo.getEntityInfo(type);
+				Field fkPkField = fkEntityInfo.getPK().getField();
+				fkPkField.setAccessible(true);
+				Object fkId = fkPkField.get(value);
+				return toByteArrayFrom(fkPkField.getType(), fkId);
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Can't convert entity '"
+						+ type.getSimpleName() + "' to  byte[]", e);
+			}
+		}
+		throw new IllegalArgumentException("Unkown java type '"
+				+ type.getSimpleName() + "' matching database type 'blob'.");
 	}
 
 	protected String fromStringToString(Object value) {
@@ -766,5 +817,9 @@ public abstract class Dao<T, K> {
 
 	protected Double fromBigDecimalToDouble(Object value) {
 		return ((BigDecimal) value).doubleValue();
+	}
+	
+	protected byte[] fromByteArrayToByteArray(Object value) {
+		return (byte[]) value;
 	}
 }
