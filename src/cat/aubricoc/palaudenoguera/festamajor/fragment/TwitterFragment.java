@@ -3,6 +3,8 @@ package cat.aubricoc.palaudenoguera.festamajor.fragment;
 import java.util.List;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +15,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,15 +47,9 @@ public class TwitterFragment extends Fragment {
 
 	private int preLast;
 
-	private String twitterQuery;
-
-	private Tweet last;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
-		twitterQuery = getActivity().getString(R.string.twitter_query);
 
 		View rootView = inflater.inflate(R.layout.fragment_twitter, container,
 				false);
@@ -68,14 +66,14 @@ public class TwitterFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				retryButton.setVisibility(View.GONE);
-				new GetDataTask().execute();
+				new GetNewTweetsTask().execute();
 			}
 		});
 
 		refreshLayout.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				new GetDataTask().execute();
+				new GetNewTweetsTask().execute();
 			}
 		});
 
@@ -92,23 +90,37 @@ public class TwitterFragment extends Fragment {
 				final int lastItem = firstVisibleItem + visibleItemCount;
 				if (lastItem == totalItemCount) {
 					if (preLast != lastItem) {
-						new GetDataLastTask().execute(last.getId());
+						new GetOldTweetsTask().execute();
 						preLast = lastItem;
 					}
 				}
 			}
 		});
 
-		listAdapter = new TwitterListAdapter(getActivity(),
-				DataContainer.getTweets());
+		List<Tweet> tweets = DataContainer.getTweets();
+		boolean searchNew = false;
+		if (tweets.isEmpty()) {
+			tweets = TwitterService.getInstance().getAll();
+			DataContainer.setTweets(tweets);
+			searchNew = true;
+		}
 
+		listAdapter = new TwitterListAdapter(getActivity(), tweets);
 		listView.setAdapter(listAdapter);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Tweet tweet = listAdapter.getItem(position);
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet.getLink()));
+				startActivity(intent);
+			}
+		});
 
-		if (DataContainer.getTweets().isEmpty()) {
-			new GetDataTask().execute();
+		if (searchNew) {
+			new GetNewTweetsTask().execute();
 		} else {
-			last = DataContainer.getTweets().get(
-					DataContainer.getTweets().size() - 1);
 			showTweets();
 		}
 
@@ -136,7 +148,7 @@ public class TwitterFragment extends Fragment {
 		noTweetsText.setVisibility(View.VISIBLE);
 	}
 
-	private class GetDataTask extends AsyncTask<String, Void, List<Tweet>> {
+	private class GetNewTweetsTask extends AsyncTask<Void, Void, List<Tweet>> {
 
 		protected String error;
 
@@ -146,12 +158,9 @@ public class TwitterFragment extends Fragment {
 		}
 
 		@Override
-		protected List<Tweet> doInBackground(String... params) {
+		protected List<Tweet> doInBackground(Void... params) {
 			try {
-				List<Tweet> tweets = TwitterService.getInstance().search(
-						twitterQuery, params.length == 0 ? null : params[0]);
-
-				return tweets;
+				return searchTweets();
 			} catch (ConnectionException e) {
 				error = e.getMessage();
 				return null;
@@ -180,36 +189,29 @@ public class TwitterFragment extends Fragment {
 			loading.setVisibility(View.GONE);
 		}
 
+		protected List<Tweet> searchTweets() {
+			return TwitterService.getInstance().getNew();
+		}
+
 		protected void addTweets(List<Tweet> result) {
 			for (int iter = result.size() - 1; iter >= 0; iter--) {
 				Tweet tweet = result.get(iter);
-				if (last == null) {
-					last = tweet;
-				}
-				if (DataContainer.getTweets().contains(tweet)) {
-					Tweet tweetOld = DataContainer.getTweets().get(
-							DataContainer.getTweets().indexOf(tweet));
-					tweetOld.setDate(tweet.getDate());
-				} else {
-					DataContainer.getTweets().add(0, tweet);
-				}
+				DataContainer.getTweets().add(0, tweet);
 			}
 		}
 	}
 
-	private class GetDataLastTask extends GetDataTask {
+	private class GetOldTweetsTask extends GetNewTweetsTask {
+
+		@Override
+		protected List<Tweet> searchTweets() {
+			return TwitterService.getInstance().getOld();
+		}
 
 		@Override
 		protected void addTweets(List<Tweet> result) {
 			for (Tweet tweet : result) {
-				if (DataContainer.getTweets().contains(tweet)) {
-					Tweet tweetOld = DataContainer.getTweets().get(
-							DataContainer.getTweets().indexOf(tweet));
-					tweetOld.setDate(tweet.getDate());
-				} else {
-					DataContainer.getTweets().add(tweet);
-					last = tweet;
-				}
+				DataContainer.getTweets().add(tweet);
 			}
 		}
 	}

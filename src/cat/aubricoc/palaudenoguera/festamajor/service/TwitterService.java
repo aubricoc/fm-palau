@@ -45,39 +45,104 @@ public class TwitterService {
 	private static final String TOKEN_URL = "https://api.twitter.com/oauth2/token";
 	private static final String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json";
 	private static final String URL_TWEET = "https://twitter.com/%s/status/%s";
+	private String query;
 
 	private TwitterService() {
 		super();
+		query = Activity.CURRENT_CONTEXT.getString(R.string.twitter_query);
 	}
 
 	public static TwitterService getInstance() {
 		return INSTANCE;
 	}
 
-	public List<Tweet> search(String query, String maxId) {
-		List<Tweet> tweets = getTweets(query, maxId);
+	public List<Tweet> getAll() {
+		return TweetDao.getInstance().getAll();
+	}
+
+	public List<Tweet> getNew() {
+		Tweet firstTweet = TweetDao.getInstance().getFirstResult();
+		String sinceId = null;
+		if (firstTweet != null) {
+			sinceId = firstTweet.getId();
+		}
+		return getNew(sinceId);
+	}
+
+	private List<Tweet> getNew(String sinceId) {
+		List<Tweet> tweets = search(sinceId, null);
+		sinceId = null;
 		for (Tweet tweet : tweets) {
-			TweetDao.getInstance().createIfNotExists(tweet);
+			if (sinceId == null && tweet.isRetweet()) {
+				sinceId = tweet.getId();
+			}
+		}
+		tweets = saveTweets(tweets);
+
+		if (tweets.isEmpty() && sinceId != null) {
+			Log.i(Constants.PROJECT_NAME, "Only retweets. Searching more...");
+			tweets = getNew(sinceId);
 		}
 		return tweets;
 	}
-	
-	private List<Tweet> getTweets(String query, String maxId) {
+
+	public List<Tweet> getOld() {
+		Tweet lastTweet = TweetDao.getInstance().getFirstResultOrderByIdAsc();
+		String maxId = null;
+		if (lastTweet != null) {
+			maxId = lastTweet.getId();
+		}
+		return getOld(maxId);
+	}
+
+	private List<Tweet> getOld(String maxId) {
+		List<Tweet> tweets = search(null, maxId);
+		maxId = null;
+		for (Tweet tweet : tweets) {
+			if (tweet.isRetweet()) {
+				maxId = tweet.getId();
+			}
+		}
+		tweets = saveTweets(tweets);
+
+		if (tweets.isEmpty() && maxId != null) {
+			Log.i(Constants.PROJECT_NAME, "Only retweets. Searching more...");
+			tweets = getOld(maxId);
+		}
+		return tweets;
+	}
+
+	private List<Tweet> saveTweets(List<Tweet> tweets) {
+		List<Tweet> newTweets = new ArrayList<Tweet>();
+		for (Tweet tweet : tweets) {
+			if (!tweet.isRetweet() && TweetDao.getInstance().createIfNotExists(tweet) > -1) {
+				newTweets.add(tweet);
+			}
+		}
+		return newTweets;
+	}
+
+	private List<Tweet> search(String sinceId, String maxId) {
 
 		if (!Utils.isOnline()) {
 			throw new ConnectionException();
 		}
 
 		try {
-			Log.i(Constants.PROJECT_NAME, "Searching tweets '" + query + "'" + (maxId == null ? "" : ", maxId=" + maxId));
-			
+			Log.i(Constants.PROJECT_NAME, "Searching tweets '" + query + "'"
+					+ (sinceId == null ? "" : ", sinceId=" + sinceId)
+					+ (maxId == null ? "" : ", maxId=" + maxId));
+
 			String encodedUrl = SEARCH_URL;
 			encodedUrl += "?result_type=recent";
+			if (sinceId != null) {
+				encodedUrl += "&since_id=" + sinceId;
+			}
 			if (maxId != null) {
 				encodedUrl += "&max_id=" + maxId;
 			}
 			encodedUrl += "&q=" + URLEncoder.encode(query, "UTF-8");
-			
+
 			String apiKey = Activity.CURRENT_CONTEXT
 					.getString(R.string.twitter_api_key);
 			String apiSecret = Activity.CURRENT_CONTEXT
@@ -106,7 +171,7 @@ public class TwitterService {
 
 			String result = getResponseBody(httpGet);
 
-			return parseTweets(result, query, maxId);
+			return parseTweets(result);
 		} catch (UnsupportedEncodingException e) {
 			throw new TwitterConnectionException(e);
 		}
@@ -164,46 +229,33 @@ public class TwitterService {
 		throw new TwitterConnectionException();
 	}
 
-	private List<Tweet> parseTweets(String json, String query, String maxId) {
+	private List<Tweet> parseTweets(String json) {
 		try {
 			List<Tweet> tweets = new ArrayList<Tweet>();
 			JSONObject jsonObject = new JSONObject(json);
 			JSONArray jsonMessages = jsonObject.getJSONArray("statuses");
-			String lastId = null;
 			for (int iter = 0; iter < jsonMessages.length(); iter++) {
 				JSONObject jsonMessage = jsonMessages.getJSONObject(iter);
 				Tweet tweet = new Tweet();
 				tweet.setId(getString(jsonMessage, "id_str"));
-				if (!tweet.getId().equals(maxId)) {
-					lastId = tweet.getId();
+				if (!jsonMessage.isNull("retweeted_status")) {
+					tweet.setRetweet(true);
+				} else {
+					tweet.setRetweet(false);
 				}
-				if (jsonMessage.isNull("retweeted_status")) {
-					tweet.setMessage(getString(jsonMessage, "text"));
-					tweet.setDate(getTwitterDate(jsonMessage
-							.getString("created_at")));
-					JSONObject user = jsonMessage.getJSONObject("user");
-					tweet.setUser(getString(user, "name"));
-					tweet.setAlias(getString(user, "screen_name"));
-					tweet.setUserImage(getString(user, "profile_image_url"));
-					tweet.setLink(String.format(URL_TWEET, tweet.getAlias(),
-							tweet.getId()));
-					if (tweet.getAlias() != null) {
-						tweet.setAlias("@" + tweet.getAlias());
-					}
-					tweets.add(tweet);
+				tweet.setMessage(getString(jsonMessage, "text"));
+				tweet.setDate(getTwitterDate(jsonMessage
+						.getString("created_at")));
+				JSONObject user = jsonMessage.getJSONObject("user");
+				tweet.setUser(getString(user, "name"));
+				tweet.setAlias(getString(user, "screen_name"));
+				tweet.setUserImage(getString(user, "profile_image_url"));
+				tweet.setLink(String.format(URL_TWEET, tweet.getAlias(),
+						tweet.getId()));
+				if (tweet.getAlias() != null) {
+					tweet.setAlias("@" + tweet.getAlias());
 				}
-			}
-			boolean searchMore = false;
-			if (lastId != null) {
-				if (tweets.isEmpty() && maxId == null) {
-					searchMore = true;
-				} else if (tweets.size() == 1 && maxId != null) {
-					searchMore = true;
-				}
-			}
-			if (searchMore) {
-				Log.i(Constants.PROJECT_NAME, "Only retweets. Searching more...");
-				tweets = search(query, lastId);
+				tweets.add(tweet);
 			}
 			return tweets;
 		} catch (JSONException e) {

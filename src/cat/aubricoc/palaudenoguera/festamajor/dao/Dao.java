@@ -216,7 +216,7 @@ public abstract class Dao<T, K> {
 		return getAll(null);
 	}
 
-	public List<T> getAll(String orderBy) {
+	protected List<T> getAll(String orderBy) {
 		synchronized (Constants.LOCK_DATABASE) {
 			open();
 			try {
@@ -240,12 +240,12 @@ public abstract class Dao<T, K> {
 		}
 	}
 
-	protected List<T> getBy(String whereClause, String... whereArgs) {
+	protected List<T> getBy(String whereClause, String[] whereArgs) {
 		return getBy(whereClause, null, whereArgs);
 	}
 
 	protected List<T> getBy(String whereClause, String orderBy,
-			String... whereArgs) {
+			String[] whereArgs) {
 		synchronized (Constants.LOCK_DATABASE) {
 			open();
 			try {
@@ -269,7 +269,7 @@ public abstract class Dao<T, K> {
 		}
 	}
 
-	protected List<T> getByQuery(String query, String... whereArgs) {
+	protected List<T> getByQuery(String query, String[] whereArgs) {
 		synchronized (Constants.LOCK_DATABASE) {
 			open();
 			try {
@@ -312,6 +312,42 @@ public abstract class Dao<T, K> {
 				close();
 			}
 		}
+	}
+	
+	protected T getSingleResultBy(String whereClause, String[] whereArgs) {
+		return getSingleResultBy(whereClause, null, whereArgs);
+	}
+	
+	protected T getSingleResultBy(String whereClause, String orderBy,
+			String[] whereArgs) {
+		synchronized (Constants.LOCK_DATABASE) {
+			open();
+			try {
+				Cursor cursor = database.query(getTableName(), getColumns(),
+						whereClause, whereArgs, null, null,
+						orderBy == null ? getOrderBy() : orderBy, "1");
+
+				cursor.moveToFirst();
+				if (!cursor.isAfterLast()) {
+					T rowObject = cursorToObject(cursor);
+					cursor.close();
+					return rowObject;
+				}
+				cursor.close();
+				return null;
+
+			} finally {
+				close();
+			}
+		}
+	}
+	
+	public T getFirstResult() {
+		return getFirstResult(null);
+	}
+	
+	protected T getFirstResult(String orderBy) {
+		return getSingleResultBy(null, orderBy, null);
 	}
 
 	public boolean exists(K id) {
@@ -456,10 +492,14 @@ public abstract class Dao<T, K> {
 	}
 
 	protected String getOrderBy() {
+		String orderBy = entityInfo.getPK().getColumnName();
 		if (entityInfo.getOrderBy() != null) {
-			return entityInfo.getOrderBy().getColumnName();
+			orderBy = entityInfo.getOrderBy().getColumnName();
+			if (entityInfo.getOrderBy().isOrderByDescendant()) {
+				orderBy += " DESC";
+			}
 		}
-		return entityInfo.getPK().getColumnName();
+		return orderBy;
 	}
 
 	protected Object fromStringTo(Class<?> type, String value) {

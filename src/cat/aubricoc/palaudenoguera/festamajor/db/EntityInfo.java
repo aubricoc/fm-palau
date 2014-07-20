@@ -170,6 +170,8 @@ public class EntityInfo {
 		private boolean autoincremental;
 
 		private boolean orderBy;
+		
+		private boolean orderByDescendant;
 
 		private EntityInfo foreignKeyTo;
 
@@ -185,6 +187,9 @@ public class EntityInfo {
 				autoincremental = field
 						.isAnnotationPresent(GeneratedValue.class);
 				orderBy = field.isAnnotationPresent(OrderBy.class);
+				if (orderBy) {
+					orderByDescendant = field.getAnnotation(OrderBy.class).descendant();
+				}
 				nullable = (columnAnnotation == null || columnAnnotation
 						.nullable());
 			}
@@ -270,6 +275,10 @@ public class EntityInfo {
 
 		public boolean isOrderBy() {
 			return orderBy;
+		}
+
+		public boolean isOrderByDescendant() {
+			return orderByDescendant;
 		}
 	}
 

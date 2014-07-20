@@ -13,4 +13,8 @@ public class TweetDao extends Dao<Tweet, String> {
 	public static TweetDao getInstance() {
 		return INSTANCE;
 	}
+
+	public Tweet getFirstResultOrderByIdAsc() {
+		return getFirstResult("id");
+	}
 }

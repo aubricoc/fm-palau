@@ -5,12 +5,14 @@ import java.util.Date;
 import android.graphics.drawable.Drawable;
 import cat.aubricoc.palaudenoguera.festamajor.db.enums.Entity;
 import cat.aubricoc.palaudenoguera.festamajor.db.enums.Id;
+import cat.aubricoc.palaudenoguera.festamajor.db.enums.OrderBy;
 import cat.aubricoc.palaudenoguera.festamajor.db.enums.Transient;
 
 @Entity
 public class Tweet {
 
 	@Id
+	@OrderBy(descendant = true)
 	private String id;
 
 	private String userImage;
@@ -24,6 +26,9 @@ public class Tweet {
 	private Date date;
 
 	private String link;
+	
+	@Transient
+	private boolean isRetweet;
 
 	@Transient
 	private Drawable image;
@@ -82,6 +87,14 @@ public class Tweet {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public boolean isRetweet() {
+		return isRetweet;
+	}
+
+	public void setRetweet(boolean isRetweet) {
+		this.isRetweet = isRetweet;
 	}
 
 	public Drawable getImage() {
