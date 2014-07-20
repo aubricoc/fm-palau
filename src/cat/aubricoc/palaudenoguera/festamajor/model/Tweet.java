@@ -3,23 +3,29 @@ package cat.aubricoc.palaudenoguera.festamajor.model;
 import java.util.Date;
 
 import android.graphics.drawable.Drawable;
+import cat.aubricoc.palaudenoguera.festamajor.db.enums.Entity;
+import cat.aubricoc.palaudenoguera.festamajor.db.enums.Id;
+import cat.aubricoc.palaudenoguera.festamajor.db.enums.Transient;
 
+@Entity
 public class Tweet {
 
+	@Id
 	private String id;
 
 	private String userImage;
 
 	private String user;
-	
+
 	private String alias;
 
 	private String message;
-	
+
 	private Date date;
-	
+
 	private String link;
-	
+
+	@Transient
 	private Drawable image;
 
 	public String getId() {
@@ -110,7 +116,7 @@ public class Tweet {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return message;

@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import android.util.Base64;
 import android.util.Log;
 import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
+import cat.aubricoc.palaudenoguera.festamajor.dao.TweetDao;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.exception.TwitterConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
@@ -54,6 +55,14 @@ public class TwitterService {
 	}
 
 	public List<Tweet> search(String query, String maxId) {
+		List<Tweet> tweets = getTweets(query, maxId);
+		for (Tweet tweet : tweets) {
+			TweetDao.getInstance().createIfNotExists(tweet);
+		}
+		return tweets;
+	}
+	
+	private List<Tweet> getTweets(String query, String maxId) {
 
 		if (!Utils.isOnline()) {
 			throw new ConnectionException();
