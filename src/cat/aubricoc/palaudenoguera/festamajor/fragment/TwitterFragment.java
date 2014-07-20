@@ -173,6 +173,7 @@ public class TwitterFragment extends Fragment {
 				if (DataContainer.getTweets().isEmpty()) {
 					showError();
 				} else {
+					showTweets();
 					Toast.makeText(Activity.CURRENT_CONTEXT, error,
 							Toast.LENGTH_SHORT).show();
 				}
