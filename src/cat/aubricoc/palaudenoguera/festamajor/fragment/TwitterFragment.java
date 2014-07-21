@@ -62,6 +62,9 @@ public class TwitterFragment extends Fragment {
 		noTweetsText = (TextView) rootView.findViewById(R.id.no_tweets);
 		loading = rootView.findViewById(R.id.loading);
 
+		refreshLayout.setColorScheme(R.color.background_red,
+				R.color.font_green, R.color.background_red, R.color.font_green);
+
 		retryButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -107,13 +110,14 @@ public class TwitterFragment extends Fragment {
 
 		listAdapter = new TwitterListAdapter(getActivity(), tweets);
 		listView.setAdapter(listAdapter);
-		
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Tweet tweet = listAdapter.getItem(position);
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet.getLink()));
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet
+						.getLink()));
 				startActivity(intent);
 			}
 		});
@@ -155,6 +159,7 @@ public class TwitterFragment extends Fragment {
 		@Override
 		protected void onPreExecute() {
 			loading.setVisibility(View.VISIBLE);
+			refreshLayout.setRefreshing(true);
 		}
 
 		@Override

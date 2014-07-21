@@ -1,8 +1,10 @@
 package cat.aubricoc.palaudenoguera.festamajor.fragment;
 
 import java.lang.reflect.Field;
+
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +92,9 @@ public class ProgramaFragment extends Fragment {
 				TextView grupView = (TextView) inflater.inflate(
 						R.layout.text_grup_programa, null);
 				grupView.setText(grupStringId);
+				Typeface font = Typeface.createFromAsset(getActivity()
+						.getAssets(), "PermanentMarker.ttf");
+				grupView.setTypeface(font);
 				viewGroup.addView(grupView);
 			}
 		}
