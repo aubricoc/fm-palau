@@ -44,6 +44,8 @@ public class TwitterFragment extends Fragment {
 	private TextView noTweetsText;
 
 	private View loading;
+	
+	private View messageContainer;
 
 	private int preLast;
 
@@ -61,6 +63,7 @@ public class TwitterFragment extends Fragment {
 		noConnectionText = (TextView) rootView.findViewById(R.id.no_connection);
 		noTweetsText = (TextView) rootView.findViewById(R.id.no_tweets);
 		loading = rootView.findViewById(R.id.loading);
+		messageContainer = rootView.findViewById(R.id.twitter_message_container);
 
 		refreshLayout.setColorScheme(R.color.background_red,
 				R.color.font_green, R.color.background_red, R.color.font_green);
@@ -68,7 +71,7 @@ public class TwitterFragment extends Fragment {
 		retryButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				retryButton.setVisibility(View.GONE);
+				retryButton.setVisibility(View.INVISIBLE);
 				new GetNewTweetsTask().execute();
 			}
 		});
@@ -136,6 +139,7 @@ public class TwitterFragment extends Fragment {
 		noConnectionText.setVisibility(View.VISIBLE);
 		retryButton.setVisibility(View.VISIBLE);
 		noTweetsText.setVisibility(View.GONE);
+		messageContainer.setVisibility(View.VISIBLE);
 	}
 
 	private void showTweets() {
@@ -143,6 +147,7 @@ public class TwitterFragment extends Fragment {
 		noConnectionText.setVisibility(View.GONE);
 		retryButton.setVisibility(View.GONE);
 		noTweetsText.setVisibility(View.GONE);
+		messageContainer.setVisibility(View.GONE);
 	}
 
 	private void showNoTweets() {
@@ -150,6 +155,7 @@ public class TwitterFragment extends Fragment {
 		noConnectionText.setVisibility(View.GONE);
 		retryButton.setVisibility(View.GONE);
 		noTweetsText.setVisibility(View.VISIBLE);
+		messageContainer.setVisibility(View.VISIBLE);
 	}
 
 	private class GetNewTweetsTask extends AsyncTask<Void, Void, List<Tweet>> {

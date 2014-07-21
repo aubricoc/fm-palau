@@ -4,27 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/no_connection"
+    <LinearLayout
+        android:id="@+id/twitter_message_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/twitter_connection_error"
-        android:visibility="gone" />
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/retry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/no_connection"
-        android:text="@string/retry"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/no_connection"
+            style="@style/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/twitter_connection_error"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/no_tweets"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/info_twitter"
-        android:visibility="gone" />
+        <Button
+            android:id="@+id/retry"
+            style="@style/button_retry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/retry"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/no_tweets"
+            style="@style/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_twitter" />
+    </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/tweets_refresh"
