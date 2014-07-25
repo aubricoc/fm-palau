@@ -36,7 +36,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to "
 				+ newVersion + "...");
 
-		// Add alters on new DB version
+		if (oldVersion < 2) {
+			EntityInfo tweetInfo = EntityInfo.getEntityInfo(Tweet.class);
+			EntityInfo twitterUserInfo = EntityInfo.getEntityInfo(TwitterUser.class);
+			db.delete(tweetInfo.getTableName(), null, null);
+			db.delete(twitterUserInfo.getTableName(), null, null);
+		}
 
 		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to "
 				+ newVersion + "...OK");
