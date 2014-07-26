@@ -1,8 +1,33 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar"></style>
+    <style name="fmpalau_theme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/action_bar</item>
+        <item name="android:actionBarTabStyle">@style/action_bar_tab</item>
+        <item name="android:actionBarItemBackground">@drawable/background_action_bar_item</item>
+    </style>
 
-    <style name="AppTheme" parent="AppBaseTheme"></style>
+    <style name="action_bar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/maroon</item>
+    </style>
+
+    <style name="action_bar_tab" parent="@android:style/Widget.Holo.Light.ActionBar.TabView.Inverse">
+        <item name="android:background">@drawable/background_tab</item>
+    </style>
+
+    <style name="dialog_action_bar" parent="@style/action_bar">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">@color/font_white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="dialog_text">
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@color/background_white</item>
+        <item name="android:textColor">@color/font_black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
     <style name="background">
         <item name="android:background">@color/background_white</item>
@@ -16,7 +41,7 @@
 
     <style name="text_hora">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/font_red</item>
+        <item name="android:textColor">@color/maroon</item>
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
         <item name="android:paddingTop">5dp</item>
@@ -39,7 +64,7 @@
     <style name="text_grup">
         <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/font_green</item>
+        <item name="android:textColor">@color/green</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -49,7 +74,7 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">30dp</item>
     </style>
-    
+
     <style name="button_retry">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/font_black</item>

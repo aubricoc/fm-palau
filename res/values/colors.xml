@@ -2,13 +2,13 @@
 <resources>
 
     <color name="translucid">#33AAAAAA</color>
-    <color name="font_white">#EAEAEA</color>
-    <color name="font_red">#93000F</color>
-    <color name="font_black">#252525</color>
-    <color name="font_green">#668F00</color>
     
-    <color name="background_red">#93000F</color>
+    <color name="font_white">#EAEAEA</color>
+    <color name="font_black">#252525</color>
     <color name="background_white">#F6F7F4</color>
     <color name="background_black">#222222</color>
+    
+    <color name="maroon">#93000F</color>
+    <color name="green">#668F00</color>
 
 </resources>

@@ -65,8 +65,8 @@ public class TwitterFragment extends Fragment {
 		loading = rootView.findViewById(R.id.loading);
 		messageContainer = rootView.findViewById(R.id.twitter_message_container);
 
-		refreshLayout.setColorScheme(R.color.background_red,
-				R.color.font_green, R.color.background_red, R.color.font_green);
+		refreshLayout.setColorScheme(R.color.maroon,
+				R.color.green, R.color.maroon, R.color.green);
 
 		retryButton.setOnClickListener(new OnClickListener() {
 			@Override
