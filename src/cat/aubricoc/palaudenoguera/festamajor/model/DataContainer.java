@@ -39,7 +39,7 @@ public class DataContainer {
 
 	public static boolean preparePhotos(Context context) {
 		if (photos != null) {
-			return true;
+			return !photos.isEmpty();
 		}
 		photos = new ArrayList<Photo>();
 		try {
