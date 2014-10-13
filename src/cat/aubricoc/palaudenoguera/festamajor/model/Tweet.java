@@ -4,10 +4,10 @@ import java.util.Date;
 
 import android.graphics.drawable.Drawable;
 
-import com.canteratech.apa.enums.Entity;
-import com.canteratech.apa.enums.Id;
-import com.canteratech.apa.enums.OrderBy;
-import com.canteratech.apa.enums.Transient;
+import com.canteratech.apa.annotation.Entity;
+import com.canteratech.apa.annotation.Id;
+import com.canteratech.apa.annotation.OrderBy;
+import com.canteratech.apa.annotation.Transient;
 
 @Entity
 public class Tweet {
