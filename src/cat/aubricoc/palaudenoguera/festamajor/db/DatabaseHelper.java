@@ -10,6 +10,9 @@ import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 
+import com.canteratech.apa.DatabaseReflection;
+import com.canteratech.apa.EntityInfo;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 	public DatabaseHelper(Context context) {

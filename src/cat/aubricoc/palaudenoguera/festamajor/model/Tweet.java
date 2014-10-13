@@ -3,10 +3,11 @@ package cat.aubricoc.palaudenoguera.festamajor.model;
 import java.util.Date;
 
 import android.graphics.drawable.Drawable;
-import cat.aubricoc.palaudenoguera.festamajor.db.enums.Entity;
-import cat.aubricoc.palaudenoguera.festamajor.db.enums.Id;
-import cat.aubricoc.palaudenoguera.festamajor.db.enums.OrderBy;
-import cat.aubricoc.palaudenoguera.festamajor.db.enums.Transient;
+
+import com.canteratech.apa.enums.Entity;
+import com.canteratech.apa.enums.Id;
+import com.canteratech.apa.enums.OrderBy;
+import com.canteratech.apa.enums.Transient;
 
 @Entity
 public class Tweet {

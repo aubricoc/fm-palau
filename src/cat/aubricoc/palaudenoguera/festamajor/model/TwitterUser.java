@@ -1,7 +1,7 @@
 package cat.aubricoc.palaudenoguera.festamajor.model;
 
-import cat.aubricoc.palaudenoguera.festamajor.db.enums.Entity;
-import cat.aubricoc.palaudenoguera.festamajor.db.enums.Id;
+import com.canteratech.apa.enums.Entity;
+import com.canteratech.apa.enums.Id;
 
 @Entity
 public class TwitterUser {
