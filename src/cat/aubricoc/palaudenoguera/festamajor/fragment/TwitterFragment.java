@@ -21,13 +21,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
 import cat.aubricoc.palaudenoguera.festamajor.adapter.TwitterListAdapter;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.service.TwitterService;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
+
+import com.canteratech.androidutils.Activity;
 
 public class TwitterFragment extends Fragment {
 

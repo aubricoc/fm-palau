@@ -15,6 +15,8 @@ import cat.aubricoc.palaudenoguera.festamajor.dialog.InfoDialog;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.MainFragmentManager;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
+import com.canteratech.androidutils.Activity;
+
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	/**

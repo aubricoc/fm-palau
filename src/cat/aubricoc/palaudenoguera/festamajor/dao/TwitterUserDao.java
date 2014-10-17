@@ -1,9 +1,9 @@
 package cat.aubricoc.palaudenoguera.festamajor.dao;
 
-import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
 import cat.aubricoc.palaudenoguera.festamajor.db.DatabaseHelper;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 
+import com.canteratech.androidutils.Activity;
 import com.canteratech.apa.Dao;
 
 public class TwitterUserDao extends Dao<TwitterUser, String> {

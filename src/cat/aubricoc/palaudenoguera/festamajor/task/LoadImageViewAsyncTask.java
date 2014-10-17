@@ -18,7 +18,8 @@ import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
-import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
+
+import com.canteratech.androidutils.Utils;
 
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 

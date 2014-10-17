@@ -1,9 +1,9 @@
 package cat.aubricoc.palaudenoguera.festamajor.dao;
 
-import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
 import cat.aubricoc.palaudenoguera.festamajor.db.DatabaseHelper;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 
+import com.canteratech.androidutils.Activity;
 import com.canteratech.apa.Dao;
 
 public class TweetDao extends Dao<Tweet, String> {

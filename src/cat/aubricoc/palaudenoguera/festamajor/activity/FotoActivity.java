@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
 
+import com.canteratech.androidutils.Activity;
+
 public class FotoActivity extends Activity {
 
 	private int resourceId;

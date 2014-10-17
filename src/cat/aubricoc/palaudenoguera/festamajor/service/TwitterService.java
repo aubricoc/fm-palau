@@ -30,14 +30,15 @@ import org.json.JSONObject;
 
 import android.util.Base64;
 import android.util.Log;
-import cat.aubricoc.palaudenoguera.festamajor.activity.Activity;
 import cat.aubricoc.palaudenoguera.festamajor.dao.TweetDao;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.exception.TwitterConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
-import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 import cat.aubricoc.palaudenoguera.festamajor2014.R;
+
+import com.canteratech.androidutils.Activity;
+import com.canteratech.androidutils.Utils;
 
 public class TwitterService {
 
