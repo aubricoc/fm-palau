@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+    }
+}
+
+def getMavenSettingsCredentials = {
+    String userHome = System.getProperty( "user.home" );
+    File mavenSettings = new File(userHome, ".m2/settings.xml")
+    def xmlSlurper = new XmlSlurper()
+    def output = xmlSlurper.parse(mavenSettings)
+    return output."servers"."server"
+}
+
+def getCredentials = { repoId ->
+    def entries = getMavenSettingsCredentials()
+    for (entry in entries) {
+        if ( entry."id".text() == repoId ) {
+            return [username: entry.username.text(), password: entry.password.text()]
+        }
+    }
+}
+
+project.ext.set("repositoryAuth", getCredentials('descans-archetype-repo'))
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url 'http://mvn.cantera-tech.com/'
+            credentials {
+                username project.repositoryAuth["username"]
+                password project.repositoryAuth["password"]
+            }
+        }
+    }
+}
