@@ -3,6 +3,7 @@ package cat.aubricoc.palaudenoguera.festamajor.activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,10 +19,15 @@ public class FotoActivity extends Activity {
 	private int resourceId;
 
 	@Override
-	protected void onCreate() {
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_foto);
 
 		setTitle(R.string.app_title);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if (getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		resourceId = getIntent().getIntExtra(Constants.EXTRA_RESOURCE_ID, -1);
 		ImageView imageView = (ImageView) findViewById(R.id.foto_image);
@@ -59,10 +65,5 @@ public class FotoActivity extends Activity {
 		shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 		startActivity(Intent.createChooser(shareIntent,
 				getText(R.string.send_to)));
-	}
-
-	@Override
-	protected int getLayoutId() {
-		return R.layout.activity_foto;
 	}
 }
