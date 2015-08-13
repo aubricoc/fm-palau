@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.aubricoc.palaudenoguera.festamajor.dialog.InfoDialog;
-import cat.aubricoc.palaudenoguera.festamajor.fragment.FotosFragment;
+import cat.aubricoc.palaudenoguera.festamajor.fragment.InstagramFragment;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.ScheduleFragment;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.TwitterFragment;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 		adapter = new ViewPagerAdapter(getSupportFragmentManager());
 		adapter.addFragment(new ScheduleFragment(), R.string.title_programa, R.string.info_programa);
 		adapter.addFragment(new TwitterFragment(), R.string.title_twitter, R.string.info_twitter);
-		adapter.addFragment(new FotosFragment(), R.string.title_fotos, R.string.info_fotos);
+		adapter.addFragment(new InstagramFragment(), R.string.title_instagram, R.string.info_instagram);
 		viewPager.setAdapter(adapter);
 	}
 

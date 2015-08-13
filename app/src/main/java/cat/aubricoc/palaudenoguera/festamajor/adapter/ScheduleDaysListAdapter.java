@@ -1,6 +1,5 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,35 +12,40 @@ import cat.aubricoc.palaudenoguera.festamajor.model.Day;
 import cat.aubricoc.palaudenoguera.festamajor.model.Event;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
-public class ScheduleDaysListAdapter extends RecyclerView.Adapter<ScheduleDaysListAdapter.Holder> {
+public class ScheduleDaysListAdapter {
+
+	private ViewGroup container;
 
 	private List<Day> days;
 
-	public ScheduleDaysListAdapter(List<Day> days) {
+	public ScheduleDaysListAdapter(ViewGroup container, List<Day> days) {
+		this.container = container;
 		this.days = days;
+		notifyDataSetChanged();
 	}
 
-	@Override
-	public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_day_schedule, parent, false);
-		return new Holder(v);
+	public void notifyDataSetChanged() {
+		container.removeAllViews();
+		for (Day day : days) {
+			View view = onCreateView(container);
+			Holder holder = new Holder(view);
+			onBindViewHolder(holder, day);
+			container.addView(view);
+		}
 	}
 
-	@Override
-	public void onBindViewHolder(Holder holder, int position) {
-		Day day = days.get(position);
+	public View onCreateView(ViewGroup parent) {
+		return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_day_schedule, parent, false);
+	}
+
+	public void onBindViewHolder(Holder holder, Day day) {
 		holder.date.setText(day.getDate());
 		holder.events.clear();
 		holder.events.addAll(day.getEvents());
 		holder.eventsAdapter.notifyDataSetChanged();
 	}
 
-	@Override
-	public int getItemCount() {
-		return days.size();
-	}
-
-	class Holder extends RecyclerView.ViewHolder {
+	class Holder {
 
 		TextView date;
 
@@ -50,11 +54,10 @@ public class ScheduleDaysListAdapter extends RecyclerView.Adapter<ScheduleDaysLi
 		List<Event> events = new ArrayList<>();
 
 		Holder(View view) {
-			super(view);
-			date = (TextView) view.findViewById(R.id.schedule_day);
+			date = (TextView) view.findViewById(R.id.schedule_date);
 
-			ViewGroup eventsView = (ViewGroup) view.findViewById(R.id.schedule_events);
-			eventsAdapter = new ScheduleEventsListAdapter(eventsView, events);
+			ViewGroup showsView = (ViewGroup) view.findViewById(R.id.schedule_events);
+			eventsAdapter = new ScheduleEventsListAdapter(showsView, events);
 		}
 	}
 }

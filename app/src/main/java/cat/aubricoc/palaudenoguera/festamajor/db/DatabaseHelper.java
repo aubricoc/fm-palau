@@ -1,17 +1,20 @@
 package cat.aubricoc.palaudenoguera.festamajor.db;
 
-import java.util.List;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
-import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
-import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 
 import com.canteratech.apa.DatabaseReflection;
 import com.canteratech.apa.EntityInfo;
+
+import java.util.List;
+
+import cat.aubricoc.palaudenoguera.festamajor.model.Instagram;
+import cat.aubricoc.palaudenoguera.festamajor.model.InstagramUser;
+import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
+import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -25,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Log.i(Constants.PROJECT_NAME, "Create DB...");
 
 		List<String> createTables = DatabaseReflection.getInstance()
-				.prepareCreateTables(Tweet.class, TwitterUser.class);
+				.prepareCreateTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
 
 		for (String sql : createTables) {
 			db.execSQL(sql);

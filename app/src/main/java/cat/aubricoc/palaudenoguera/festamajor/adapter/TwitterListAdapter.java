@@ -1,16 +1,16 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.canteratech.androidutils.Activity;
 
 import java.util.Date;
 import java.util.List;
@@ -20,47 +20,31 @@ import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
-public class TwitterListAdapter extends ArrayAdapter<Tweet> {
+public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.Holder> {
 
-	private LayoutInflater layoutInflater;
+	private List<Tweet> tweets;
 
-	public TwitterListAdapter(Context context, List<Tweet> tweets) {
-		super(context, R.layout.item_list_tweet, tweets);
-		this.layoutInflater = LayoutInflater.from(context);
+	public TwitterListAdapter(List<Tweet> tweets) {
+		this.tweets = tweets;
 	}
 
-	@SuppressLint("InflateParams")
 	@Override
-	public View getView(int iter, View view, ViewGroup parent) {
+	public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_tweet, parent, false);
+		return new Holder(view);
+	}
 
-		Tweet tweet = getItem(iter);
-
-		ViewHolder holder;
-		if (view == null) {
-
-			view = layoutInflater.inflate(R.layout.item_list_tweet, null);
-			holder = new ViewHolder();
-			holder.userImage = (ImageView) view
-					.findViewById(R.id.tweet_user_image);
-			holder.user = (TextView) view.findViewById(R.id.tweet_user);
-			holder.userAlias = (TextView) view
-					.findViewById(R.id.tweet_user_alias);
-			holder.message = (TextView) view.findViewById(R.id.tweet_message);
-			holder.date = (TextView) view.findViewById(R.id.tweet_date);
-
-			view.setTag(holder);
-		} else {
-			holder = (ViewHolder) view.getTag();
-		}
-
+	@Override
+	public void onBindViewHolder(Holder holder, int position) {
+		Tweet tweet = tweets.get(position);
 		Drawable image = tweet.getImage();
 		if (image == null) {
-			if (DataContainer.getUserImages().isEmpty()) {
-				DataContainer.prepareUserImages(getContext());
+			if (DataContainer.getUserTwitterImages().isEmpty()) {
+				DataContainer.prepareTwitterUserImages(Activity.CURRENT_CONTEXT);
 			}
-			image = DataContainer.getUserImages().get(tweet.getAlias());
+			image = DataContainer.getUserTwitterImages().get(tweet.getAlias());
 		}
-		
+
 		if (image == null) {
 			new LoadImageViewAsyncTask(holder.userImage, tweet).execute(tweet
 					.getUserImage());
@@ -75,7 +59,11 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 		holder.message.setText(Html.fromHtml(tweet.getMessage()));
 		holder.date.setText(getDateDifferenceFromNow(tweet.getDate()));
 
-		return view;
+	}
+
+	@Override
+	public int getItemCount() {
+		return tweets.size();
 	}
 
 	private String getDateDifferenceFromNow(Date date) {
@@ -92,16 +80,30 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 			result = "" + (diffSegs / (60 * 60));
 			result += !result.equals("1") ? " hrs" : " hr";
 		} else {
-			result = DateFormat.getDateFormat(getContext()).format(date);
+			result = DateFormat.getDateFormat(Activity.CURRENT_CONTEXT).format(date);
 		}
 		return result;
 	}
 
-	private class ViewHolder {
+	class Holder extends RecyclerView.ViewHolder {
+
 		TextView date;
+
 		TextView message;
+
 		TextView userAlias;
+
 		TextView user;
+
 		ImageView userImage;
+
+		public Holder(View view) {
+			super(view);
+			userImage = (ImageView) view.findViewById(R.id.tweet_user_image);
+			user = (TextView) view.findViewById(R.id.tweet_user);
+			userAlias = (TextView) view.findViewById(R.id.tweet_user_alias);
+			message = (TextView) view.findViewById(R.id.tweet_message);
+			date = (TextView) view.findViewById(R.id.tweet_date);
+		}
 	}
 }
