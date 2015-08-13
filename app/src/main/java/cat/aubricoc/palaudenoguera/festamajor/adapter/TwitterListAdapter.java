@@ -1,8 +1,5 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
-import java.util.Date;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Date;
+import java.util.List;
+
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
@@ -24,7 +25,7 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 	private LayoutInflater layoutInflater;
 
 	public TwitterListAdapter(Context context, List<Tweet> tweets) {
-		super(context, R.layout.list_item_tweet, tweets);
+		super(context, R.layout.item_list_tweet, tweets);
 		this.layoutInflater = LayoutInflater.from(context);
 	}
 
@@ -37,7 +38,7 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 		ViewHolder holder;
 		if (view == null) {
 
-			view = layoutInflater.inflate(R.layout.list_item_tweet, null);
+			view = layoutInflater.inflate(R.layout.item_list_tweet, null);
 			holder = new ViewHolder();
 			holder.userImage = (ImageView) view
 					.findViewById(R.id.tweet_user_image);
@@ -78,7 +79,7 @@ public class TwitterListAdapter extends ArrayAdapter<Tweet> {
 	}
 
 	private String getDateDifferenceFromNow(Date date) {
-		String result = "";
+		String result;
 		Date now = new Date();
 		long diffSegs = (now.getTime() - date.getTime()) / 1000;
 		if (diffSegs < 60) {
