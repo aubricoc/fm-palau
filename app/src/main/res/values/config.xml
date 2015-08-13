@@ -4,4 +4,9 @@
     <string name="twitter_query">#etfelicitofill</string>
     <string name="twitter_api_key">ydjA5Lw3KpwfxbA5ugGFZHxSB</string>
     <string name="twitter_api_secret">0CnYeq9E3uU4vYalskElJqVfLVeXfKWgOqlqZgkjrVPWgIi32P</string>
+
+    <string name="instagram_query">fmpalau</string>
+    <string name="instagram_api_key">ad7d06d2197c488fb08cbf0db1426f41</string>
+    <string name="instagram_api_secret">5f8e699ace1e4f0e8150ac57f84df34c</string>
+
 </resources>

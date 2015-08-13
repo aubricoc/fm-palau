@@ -11,7 +11,7 @@
 
         <TextView
             android:id="@+id/schedule_event_time"
-            style="@style/text_hora"
+            style="@style/text_card_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -22,13 +22,13 @@
 
             <TextView
                 android:id="@+id/schedule_event_name"
-                style="@style/text_nom"
+                style="@style/text_card_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/schedule_event_description"
-                style="@style/text_descripcio"
+                style="@style/text_card_low"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
