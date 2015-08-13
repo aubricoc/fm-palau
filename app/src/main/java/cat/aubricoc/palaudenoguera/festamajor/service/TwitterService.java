@@ -1,17 +1,10 @@
 package cat.aubricoc.palaudenoguera.festamajor.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import android.util.Base64;
+import android.util.Log;
+
+import com.canteratech.androidutils.Activity;
+import com.canteratech.androidutils.Utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,17 +21,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Base64;
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import cat.aubricoc.palaudenoguera.festamajor.dao.TweetDao;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.exception.TwitterConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
-
-import com.canteratech.androidutils.Activity;
-import com.canteratech.androidutils.Utils;
 
 public class TwitterService {
 
@@ -114,7 +115,7 @@ public class TwitterService {
 	}
 
 	private List<Tweet> saveTweets(List<Tweet> tweets) {
-		List<Tweet> newTweets = new ArrayList<Tweet>();
+		List<Tweet> newTweets = new ArrayList<>();
 		for (Tweet tweet : tweets) {
 			if (!tweet.isRetweet() && TweetDao.getInstance().createIfNotExists(tweet) > -1) {
 				newTweets.add(tweet);
@@ -215,7 +216,7 @@ public class TwitterService {
 
 				BufferedReader bReader = new BufferedReader(
 						new InputStreamReader(inputStream, "UTF-8"), 8);
-				String line = null;
+				String line;
 				while ((line = bReader.readLine()) != null) {
 					sb.append(line);
 				}
@@ -232,7 +233,7 @@ public class TwitterService {
 
 	private List<Tweet> parseTweets(String json) {
 		try {
-			List<Tweet> tweets = new ArrayList<Tweet>();
+			List<Tweet> tweets = new ArrayList<>();
 			JSONObject jsonObject = new JSONObject(json);
 			JSONArray jsonMessages = jsonObject.getJSONArray("statuses");
 			for (int iter = 0; iter < jsonMessages.length(); iter++) {
@@ -245,12 +246,11 @@ public class TwitterService {
 					tweet.setRetweet(false);
 				}
 				tweet.setMessage(getString(jsonMessage, "text"));
-				tweet.setDate(getTwitterDate(jsonMessage
-						.getString("created_at")));
+				tweet.setDate(getTwitterDate(jsonMessage.getString("created_at")));
 				JSONObject user = jsonMessage.getJSONObject("user");
 				tweet.setUser(getString(user, "name"));
 				tweet.setAlias(getString(user, "screen_name"));
-				tweet.setUserImage(getString(user, "profile_image_url"));
+				tweet.setUserImage(getString(user, "profile_image_url").replace("_normal", ""));
 				tweet.setLink(String.format(URL_TWEET, tweet.getAlias(),
 						tweet.getId()));
 				if (tweet.getAlias() != null) {

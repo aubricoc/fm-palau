@@ -16,29 +16,28 @@ import com.canteratech.androidutils.Activity;
 
 import java.util.List;
 
-import cat.aubricoc.palaudenoguera.festamajor.adapter.TwitterListAdapter;
+import cat.aubricoc.palaudenoguera.festamajor.adapter.InstagramListAdapter;
 import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
-import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
-import cat.aubricoc.palaudenoguera.festamajor.service.TwitterService;
+import cat.aubricoc.palaudenoguera.festamajor.model.Instagram;
+import cat.aubricoc.palaudenoguera.festamajor.service.InstagramService;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
-public class TwitterFragment extends Fragment {
+public class InstagramFragment extends Fragment {
 
 	private SwipeRefreshLayout refreshLayout;
 
-	private TwitterListAdapter listAdapter;
+	private InstagramListAdapter listAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_twitter, container,
+		View rootView = inflater.inflate(R.layout.fragment_instagram, container,
 				false);
 
-		refreshLayout = (SwipeRefreshLayout) rootView
-				.findViewById(R.id.tweets_refresh);
-		RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.tweets_list);
+		refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.instagrams_refresh);
+		RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.instagrams_list);
 		final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
 
@@ -47,7 +46,7 @@ public class TwitterFragment extends Fragment {
 		refreshLayout.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				new GetNewTweetsTask().execute();
+				new GetNewInstagramsTask().execute();
 			}
 		});
 
@@ -67,42 +66,42 @@ public class TwitterFragment extends Fragment {
 
 				if (!refreshLayout.isRefreshing()) {
 					if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-						new GetOldTweetsTask().execute();
+						new GetOldInstagramsTask().execute();
 					}
 				}
 			}
 		});
 
-		List<Tweet> tweets = DataContainer.getTweets();
+		List<Instagram> instagrams = DataContainer.getInstagrams();
 		boolean searchNew = false;
-		if (tweets.isEmpty()) {
-			tweets = TwitterService.getInstance().getAll();
-			DataContainer.setTweets(tweets);
+		if (instagrams.isEmpty()) {
+			instagrams = InstagramService.getInstance().getAll();
+			DataContainer.setInstagrams(instagrams);
 			searchNew = true;
 		}
 
-		listAdapter = new TwitterListAdapter(tweets);
+		listAdapter = new InstagramListAdapter(instagrams);
 		recyclerView.setAdapter(listAdapter);
 
 //		recyclerView.setOnItemClickListener(new OnItemClickListener() {
 //			@Override
 //			public void onItemClick(AdapterView<?> parent, View view,
 //									int position, long id) {
-//				Tweet tweet = listAdapter.getItem(position);
-//				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet
+//				Instagram instagram = listAdapter.getItem(position);
+//				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagram
 //						.getLink()));
 //				startActivity(intent);
 //			}
 //		});
 
 		if (searchNew) {
-			new GetNewTweetsTask().execute();
+			new GetNewInstagramsTask().execute();
 		}
 
 		return rootView;
 	}
 
-	private class GetNewTweetsTask extends AsyncTask<Void, Void, List<Tweet>> {
+	private class GetNewInstagramsTask extends AsyncTask<Void, Void, List<Instagram>> {
 
 		protected String error;
 
@@ -112,9 +111,9 @@ public class TwitterFragment extends Fragment {
 		}
 
 		@Override
-		protected List<Tweet> doInBackground(Void... params) {
+		protected List<Instagram> doInBackground(Void... params) {
 			try {
-				return searchTweets();
+				return searchInstagrams();
 			} catch (ConnectionException e) {
 				error = e.getMessage();
 				return null;
@@ -122,46 +121,46 @@ public class TwitterFragment extends Fragment {
 		}
 
 		@Override
-		protected void onPostExecute(List<Tweet> result) {
+		protected void onPostExecute(List<Instagram> result) {
 			if (result == null) {
-				if (DataContainer.getTweets().isEmpty()) {
-					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.twitter_connection_error, Toast.LENGTH_SHORT).show();
+				if (DataContainer.getInstagrams().isEmpty()) {
+					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.instagram_connection_error, Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(Activity.CURRENT_CONTEXT, error, Toast.LENGTH_SHORT).show();
 				}
 			} else {
-				if (DataContainer.getTweets().isEmpty() && result.isEmpty()) {
-					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.info_twitter, Toast.LENGTH_SHORT).show();
+				if (DataContainer.getInstagrams().isEmpty() && result.isEmpty()) {
+					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.info_instagram, Toast.LENGTH_SHORT).show();
 				}
-				addTweets(result);
+				addInstagrams(result);
 				listAdapter.notifyDataSetChanged();
 			}
 			refreshLayout.setRefreshing(false);
 		}
 
-		protected List<Tweet> searchTweets() {
-			return TwitterService.getInstance().getNew();
+		protected List<Instagram> searchInstagrams() {
+			return InstagramService.getInstance().getNew();
 		}
 
-		protected void addTweets(List<Tweet> result) {
+		protected void addInstagrams(List<Instagram> result) {
 			for (int iter = result.size() - 1; iter >= 0; iter--) {
-				Tweet tweet = result.get(iter);
-				DataContainer.getTweets().add(0, tweet);
+				Instagram instagram = result.get(iter);
+				DataContainer.getInstagrams().add(0, instagram);
 			}
 		}
 	}
 
-	private class GetOldTweetsTask extends GetNewTweetsTask {
+	private class GetOldInstagramsTask extends GetNewInstagramsTask {
 
 		@Override
-		protected List<Tweet> searchTweets() {
-			return TwitterService.getInstance().getOld();
+		protected List<Instagram> searchInstagrams() {
+			return InstagramService.getInstance().getOld();
 		}
 
 		@Override
-		protected void addTweets(List<Tweet> result) {
-			for (Tweet tweet : result) {
-				DataContainer.getTweets().add(tweet);
+		protected void addInstagrams(List<Instagram> result) {
+			for (Instagram instagram : result) {
+				DataContainer.getInstagrams().add(instagram);
 			}
 		}
 	}

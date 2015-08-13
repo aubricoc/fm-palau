@@ -1,6 +1,11 @@
 package cat.aubricoc.palaudenoguera.festamajor.task;
 
-import java.io.ByteArrayInputStream;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.canteratech.androidutils.Utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -10,26 +15,32 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ImageView;
+import java.io.ByteArrayInputStream;
+
+import cat.aubricoc.palaudenoguera.festamajor.dao.InstagramUserDao;
 import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
+import cat.aubricoc.palaudenoguera.festamajor.model.Instagram;
+import cat.aubricoc.palaudenoguera.festamajor.model.InstagramUser;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
-
-import com.canteratech.androidutils.Utils;
 
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 
 	private Tweet tweet;
+
+	private Instagram instagram;
 
 	private ImageView imageView;
 
 	public LoadImageViewAsyncTask(ImageView imageView, Tweet tweet) {
 		this.imageView = imageView;
 		this.tweet = tweet;
+	}
+
+	public LoadImageViewAsyncTask(ImageView imageView, Instagram instagram) {
+		this.imageView = imageView;
+		this.instagram = instagram;
 	}
 
 	@Override
@@ -67,16 +78,27 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 	@Override
 	protected void onPostExecute(byte[] result) {
 		if (result != null) {
-			TwitterUser twitterUser = new TwitterUser();
-			twitterUser.setAlias(tweet.getAlias());
-			twitterUser.setImage(result);
-			TwitterUserDao.getInstance().createIfNotExists(twitterUser);
-			Drawable drawable = Drawable.createFromStream(
-					new ByteArrayInputStream(result), null);
-			tweet.setImage(drawable);
-			imageView.setImageDrawable(drawable);
-			imageView.setVisibility(View.VISIBLE);
-			DataContainer.getUserImages().put(tweet.getAlias(), drawable);
+			if (tweet != null) {
+				TwitterUser twitterUser = new TwitterUser();
+				twitterUser.setAlias(tweet.getAlias());
+				twitterUser.setImage(result);
+				TwitterUserDao.getInstance().createIfNotExists(twitterUser);
+				Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(result), null);
+				tweet.setImage(drawable);
+				imageView.setImageDrawable(drawable);
+				imageView.setVisibility(View.VISIBLE);
+				DataContainer.getUserTwitterImages().put(tweet.getAlias(), drawable);
+			} else if (instagram != null) {
+				InstagramUser instagramUser = new InstagramUser();
+				instagramUser.setAlias(instagram.getAlias());
+				instagramUser.setImage(result);
+				InstagramUserDao.getInstance().createIfNotExists(instagramUser);
+				Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(result), null);
+				instagram.setImage(drawable);
+				imageView.setImageDrawable(drawable);
+				imageView.setVisibility(View.VISIBLE);
+				DataContainer.getUserTwitterImages().put(instagram.getAlias(), drawable);
+			}
 		}
 	}
 }

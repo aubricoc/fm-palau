@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cat.aubricoc.palaudenoguera.festamajor.dao.InstagramUserDao;
 import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
@@ -18,9 +19,13 @@ public class DataContainer {
 
 	private static List<Tweet> tweets = new ArrayList<>();
 
+	private static List<Instagram> instagrams = new ArrayList<>();
+
 	private static List<Photo> photos;
 
-	private static Map<String, Drawable> userImages = new HashMap<>();
+	private static Map<String, Drawable> userTwitterImages = new HashMap<>();
+
+	private static Map<String, Drawable> userInstagramImages = new HashMap<>();
 
 	public static List<Tweet> getTweets() {
 		return tweets;
@@ -30,12 +35,24 @@ public class DataContainer {
 		tweets = tweetList;
 	}
 
+	public static List<Instagram> getInstagrams() {
+		return instagrams;
+	}
+
+	public static void setInstagrams(List<Instagram> instagramList) {
+		instagrams = instagramList;
+	}
+
 	public static List<Photo> getPhotos() {
 		return photos;
 	}
 
-	public static Map<String, Drawable> getUserImages() {
-		return userImages;
+	public static Map<String, Drawable> getUserTwitterImages() {
+		return userTwitterImages;
+	}
+
+	public static Map<String, Drawable> getUserInstagramImages() {
+		return userInstagramImages;
 	}
 
 	public static boolean preparePhotos(Context context) {
@@ -61,12 +78,21 @@ public class DataContainer {
 		}
 	}
 
-	public static void prepareUserImages(Context context) {
-		List<TwitterUser> users = TwitterUserDao.getInstance().getAll();
-		for (TwitterUser user : users) {
+	public static void prepareTwitterUserImages(Context context) {
+		List<TwitterUser> twitterUsers = TwitterUserDao.getInstance().getAll();
+		for (TwitterUser user : twitterUsers) {
 			Drawable drawable = Drawable.createFromStream(
 					new ByteArrayInputStream(user.getImage()), null);
-			userImages.put(user.getAlias(), drawable);
+			userTwitterImages.put(user.getAlias(), drawable);
+		}
+	}
+
+	public static void prepareInstagramUserImages(Context context) {
+		List<InstagramUser> instagramUsers = InstagramUserDao.getInstance().getAll();
+		for (InstagramUser user : instagramUsers) {
+			Drawable drawable = Drawable.createFromStream(
+					new ByteArrayInputStream(user.getImage()), null);
+			userInstagramImages.put(user.getAlias(), drawable);
 		}
 	}
 }
