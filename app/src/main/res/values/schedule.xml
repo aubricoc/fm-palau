@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="day_1">Dimecres, dia 27 d\'agost</string>
+    <string name="day_1_event_1_time">12:00</string>
+    <string name="day_1_event_1_name">Exposició de Fotografies Antigues</string>
+    <string name="day_1_event_1_description">Inauguració de la segona exposició de fotografies antigues de Palau de Noguera</string>
+    <string name="day_2">Divendres, dia 29 d\'agost</string>
+    <string name="day_2_event_1_time">22:00</string>
+    <string name="day_2_event_1_name">Sopar de Jovent</string>
+    <string name="day_2_event_1_description">(Venda anticipada de tiquets per la Comissió)</string>
+    <string name="day_2_event_2_time">01:00</string>
+    <string name="day_2_event_2_name">Nit Pallaresa</string>
+    <string name="day_2_event_2_description">amb els grups pallaresos</string>
+    <string name="day_2_event_2_show_1">Res a Dir</string>
+    <string name="day_2_event_2_show_2">Martin\'s Deejay</string>
+    <string name="day_3">Dissabte, dia 30 d\'agost</string>
+    <string name="day_3_event_1_time">17:30</string>
+    <string name="day_3_event_1_name">Castells Inflables</string>
+    <string name="day_3_event_1_description">Inflables i concurs de butifarra a la Placeta</string>
+    <string name="day_3_event_2_time">23:30</string>
+    <string name="day_3_event_2_name">Ball de Festa Major</string>
+    <string name="day_3_event_2_description">amb els grups</string>
+    <string name="day_3_event_2_show_1">El Cairo Trio</string>
+    <string name="day_3_event_2_show_2">La Banda del Coche Rojo</string>
+    <string name="day_3_event_2_show_3">DJ Rivas</string>
+    <string name="day_4">Diumenge, dia 31 d\'agost</string>
+    <string name="day_4_event_1_time">13:00</string>
+    <string name="day_4_event_1_name">Missa de Festa Major</string>
+    <string name="day_4_event_2_time">14:00</string>
+    <string name="day_4_event_2_name">Gran Plega</string>
+    <string name="day_4_event_3_time">19:30</string>
+    <string name="day_4_event_3_name">Lluït Ball de Tarda</string>
+    <string name="day_4_event_3_description">Durant el ball de tarda es realitzarà la ballada del Contrapàs de Palau de Noguera</string>
+    <string name="day_4_event_3_show_1">Zafiro 3</string>
+    <string name="day_5">Dimarts, dia 2 de setembre</string>
+    <string name="day_5_event_1_time">17:00</string>
+    <string name="day_5_event_1_name">Cucanyes per la canalla</string>
+    <string name="day_5_event_2_time">22:00</string>
+    <string name="day_5_event_2_name">Sopar de germanor</string>
+    <string name="day_5_event_3_time">24:00</string>
+    <string name="day_5_event_3_name">Ball de Fi de Festa</string>
+    <string name="day_5_event_3_show_1">Duet Esquitx</string>
+
+</resources>

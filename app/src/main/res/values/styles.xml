@@ -1,20 +1,13 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="fmpalau_theme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/action_bar</item>
-        <item name="android:actionBarTabStyle">@style/action_bar_tab</item>
-        <item name="android:actionBarItemBackground">@drawable/background_action_bar_item</item>
+    <style name="fmpalau_theme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/maroon</item>
+        <item name="colorPrimaryDark">@color/dark</item>
+        <item name="colorAccent">@color/green</item>
     </style>
 
-    <style name="action_bar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+    <style name="dialog_action_bar">
         <item name="android:background">@color/maroon</item>
-    </style>
-
-    <style name="action_bar_tab" parent="@android:style/Widget.Holo.Light.ActionBar.TabView.Inverse">
-        <item name="android:background">@drawable/background_tab</item>
-    </style>
-
-    <style name="dialog_action_bar" parent="@style/action_bar">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:textColor">@color/font_white</item>
@@ -29,14 +22,9 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="background">
-        <item name="android:background">@color/background_white</item>
-    </style>
-
     <style name="text_dia">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/font_white</item>
-        <item name="android:background">@drawable/background_title</item>
+        <item name="android:paddingBottom">@dimen/margin</item>
     </style>
 
     <style name="text_hora">
