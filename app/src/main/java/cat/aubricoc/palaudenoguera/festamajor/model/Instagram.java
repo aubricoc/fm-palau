@@ -28,6 +28,8 @@ public class Instagram {
 
 	private String link;
 
+	private byte[] pictureBytes;
+
 	@Transient
 	private Drawable image;
 
@@ -80,6 +82,14 @@ public class Instagram {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public byte[] getPictureBytes() {
+		return pictureBytes;
+	}
+
+	public void setPictureBytes(byte[] pictureBytes) {
+		this.pictureBytes = pictureBytes;
 	}
 
 	public String getLink() {
