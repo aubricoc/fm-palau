@@ -23,6 +23,7 @@ import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
 public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.Holder> {
@@ -41,6 +42,7 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 
 	@Override
 	public void onBindViewHolder(Holder holder, int position) {
+		holder.card.setCardBackgroundColor(Utils.getComplementaryColor(position));
 		final Tweet tweet = tweets.get(position);
 		Drawable image = tweet.getImage();
 		if (image == null) {

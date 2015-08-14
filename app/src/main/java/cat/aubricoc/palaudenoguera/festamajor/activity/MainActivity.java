@@ -25,10 +25,6 @@ import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
 public class MainActivity extends Activity {
 
-	private ViewPager viewPager;
-
-	private ViewPagerAdapter adapter;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,14 +32,14 @@ public class MainActivity extends Activity {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		toolbar.setTitle(R.string.app_title);
 		setSupportActionBar(toolbar);
-		viewPager = (ViewPager) findViewById(R.id.viewpager);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 		setupViewPager(viewPager);
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 		tabLayout.setupWithViewPager(viewPager);
 	}
 
 	private void setupViewPager(ViewPager viewPager) {
-		adapter = new ViewPagerAdapter(getSupportFragmentManager());
+		ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 		adapter.addFragment(new ScheduleFragment(), R.string.title_programa);
 		adapter.addFragment(new TwitterFragment(), R.string.title_twitter);
 		adapter.addFragment(new InstagramFragment(), R.string.title_instagram);

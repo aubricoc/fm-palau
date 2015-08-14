@@ -25,6 +25,7 @@ import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Instagram;
 import cat.aubricoc.palaudenoguera.festamajor.model.InstagramUser;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
 public class InstagramListAdapter extends RecyclerView.Adapter<InstagramListAdapter.Holder> {
@@ -43,6 +44,7 @@ public class InstagramListAdapter extends RecyclerView.Adapter<InstagramListAdap
 
 	@Override
 	public void onBindViewHolder(Holder holder, int position) {
+		holder.card.setCardBackgroundColor(Utils.getComplementaryColor(position));
 		final Instagram instagram = instagrams.get(position);
 		Drawable image = instagram.getImage();
 		if (image == null) {

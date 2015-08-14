@@ -33,18 +33,25 @@
     </style>
 
     <style name="text_card_title_low" parent="@style/text_card">
+        <item name="android:textColor">@color/secondary_text_default_material_dark</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="text_card_side" parent="@style/text_card">
+        <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
     <style name="text_card_content" parent="@style/text_card">
     </style>
 
     <style name="text_card_low" parent="@style/text_card">
+        <item name="android:textColor">@color/secondary_text_default_material_dark</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="text_card_great" parent="@style/text_card">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/secondary_text_default_material_dark</item>
     </style>
 
     <style name="text_message">
