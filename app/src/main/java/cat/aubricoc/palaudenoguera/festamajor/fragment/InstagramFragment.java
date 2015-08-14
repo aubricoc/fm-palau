@@ -41,7 +41,7 @@ public class InstagramFragment extends Fragment {
 		final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
 
-		refreshLayout.setColorSchemeResources(R.color.maroon, R.color.green, R.color.maroon, R.color.green);
+		refreshLayout.setColorSchemeResources(R.color.primary, R.color.secondary, R.color.primary, R.color.secondary);
 
 		refreshLayout.setOnRefreshListener(new OnRefreshListener() {
 			@Override
@@ -130,7 +130,7 @@ public class InstagramFragment extends Fragment {
 				}
 			} else {
 				if (DataContainer.getInstagrams().isEmpty() && result.isEmpty()) {
-					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.info_instagram, Toast.LENGTH_SHORT).show();
+					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.no_instagrams, Toast.LENGTH_SHORT).show();
 				}
 				addInstagrams(result);
 				listAdapter.notifyDataSetChanged();

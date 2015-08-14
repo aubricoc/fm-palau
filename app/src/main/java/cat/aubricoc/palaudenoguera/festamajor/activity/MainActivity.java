@@ -1,5 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.canteratech.androidutils.Activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cat.aubricoc.palaudenoguera.festamajor.dialog.InfoDialog;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.InstagramFragment;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.ScheduleFragment;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.TwitterFragment;
@@ -43,9 +44,9 @@ public class MainActivity extends Activity {
 
 	private void setupViewPager(ViewPager viewPager) {
 		adapter = new ViewPagerAdapter(getSupportFragmentManager());
-		adapter.addFragment(new ScheduleFragment(), R.string.title_programa, R.string.info_programa);
-		adapter.addFragment(new TwitterFragment(), R.string.title_twitter, R.string.info_twitter);
-		adapter.addFragment(new InstagramFragment(), R.string.title_instagram, R.string.info_instagram);
+		adapter.addFragment(new ScheduleFragment(), R.string.title_programa);
+		adapter.addFragment(new TwitterFragment(), R.string.title_twitter);
+		adapter.addFragment(new InstagramFragment(), R.string.title_instagram);
 		viewPager.setAdapter(adapter);
 	}
 
@@ -69,11 +70,11 @@ public class MainActivity extends Activity {
 	}
 
 	public void showInfo() {
-		int position = viewPager.getCurrentItem();
-		String infoText = adapter.getInfo(position);
-
-		InfoDialog infoDialog = new InfoDialog(this, infoText);
-		infoDialog.show();
+		Dialog dialog = new Dialog(Activity.CURRENT_CONTEXT);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setCancelable(true);
+		dialog.setContentView(R.layout.dialog_info);
+		dialog.show();
 	}
 
 	class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -81,8 +82,6 @@ public class MainActivity extends Activity {
 		private final List<Fragment> mFragmentList = new ArrayList<>();
 
 		private final List<String> mFragmentTitleList = new ArrayList<>();
-
-		private final List<String> mFragmentInfoList = new ArrayList<>();
 
 		public ViewPagerAdapter(FragmentManager manager) {
 			super(manager);
@@ -96,18 +95,13 @@ public class MainActivity extends Activity {
 			return mFragmentList.size();
 		}
 
-		public void addFragment(Fragment fragment, int titleRes, int infoTextRes) {
+		public void addFragment(Fragment fragment, int titleRes) {
 			mFragmentList.add(fragment);
 			mFragmentTitleList.add(getString(titleRes));
-			mFragmentInfoList.add(getString(infoTextRes));
 		}
 		@Override
 		public CharSequence getPageTitle(int position) {
 			return mFragmentTitleList.get(position);
-		}
-
-		public String getInfo(int position) {
-			return mFragmentInfoList.get(position);
 		}
 	}
 }
