@@ -1,13 +1,13 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="fmpalau_theme" parent="@style/Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/maroon</item>
-        <item name="colorPrimaryDark">@color/dark</item>
-        <item name="colorAccent">@color/green</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/secondary</item>
     </style>
 
     <style name="dialog_action_bar">
-        <item name="android:background">@color/maroon</item>
+        <item name="android:background">@color/primary</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:textColor">@color/font_white</item>

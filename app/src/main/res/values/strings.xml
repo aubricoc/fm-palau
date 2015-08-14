@@ -13,10 +13,9 @@
     <string name="instagram_user_image">User Image</string>
     <string name="instagram_picture">Picture</string>
     <string name="info">Informació</string>
-    <string name="info_programa">La Comissió de Festes Contrapàs de Palau de Noguera es reserva el dret d\'alterar el programa.</string>
-    <string name="info_twitter">Piula utilitzant el hashtag #FMPalau o #palaueros per a que aparegui.\n\nDegut a restriccions de Twitter només es mostrarán piulades de l\'última setmana.</string>
-    <string name="info_instagram">Penja fotos a Instagram utilitzant el hashtag #FMPalau per a que aparegui.</string>
-    <string name="info_fotos">Durant la festa major, cada dia es publicarán les fotos del dia anterior.\n\nPer a que apareguin es indispensable actualitzar l\'aplicació.</string>
+    <string name="info_text">La Comissió de Festes Contrapàs de Palau de Noguera es reserva el dret d\'alterar el programa.\n\nPiula a Twitter utilitzant el hashtag #fmpalau o penja fotos a Instagram amb el hashtag #fmpalau.\n\nDegut a restriccions de Twitter només es mostrarán piulades de l\'última setmana.</string>
+    <string name="no_tweets">No hi ha tweets amb el hashtag #fmpalau.</string>
+    <string name="no_instagrams">No hi ha fotos amb el hashtag #fmpalau.</string>
     <string name="retry">Reintentar</string>
     <string name="photo">Foto</string>
     <string name="share">Compartir</string>

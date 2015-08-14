@@ -7,8 +7,12 @@
     <color name="font_black">#252525</color>
     <color name="background_white">#F6F7F4</color>
     <color name="background_black">#222222</color>
-    
-    <color name="maroon">#93000F</color>
-    <color name="green">#668F00</color>
-    <color name="dark">#68000a</color>
+
+    <color name="primary">#93000F</color>
+    <color name="secondary">#668F00</color>
+    <color name="primary_dark">#68000a</color>
+
+    <color name="complementary_1">#983F00</color>
+    <color name="complementary_2">#167F00</color>
+    <color name="complementary_3">#005F52</color>
 </resources>
