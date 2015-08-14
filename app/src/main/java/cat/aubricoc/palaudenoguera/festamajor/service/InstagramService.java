@@ -184,6 +184,10 @@ public class InstagramService {
 				instagram.setAlias(getString(user, "username"));
 				instagram.setUserImage(getString(user, "profile_picture"));
 				instagram.setLink(getString(jsonMessage, "link"));
+				JSONObject images = jsonMessage.getJSONObject("images");
+				instagram.setPictureThumbnailUrl(getString(images.getJSONObject("thumbnail"), "url"));
+				instagram.setPictureLowUrl(getString(images.getJSONObject("low_resolution"), "url"));
+				instagram.setPictureThumbnailUrl(getString(images.getJSONObject("standard_resolution"), "url"));
 				instagrams.add(instagram);
 			}
 			return instagrams;

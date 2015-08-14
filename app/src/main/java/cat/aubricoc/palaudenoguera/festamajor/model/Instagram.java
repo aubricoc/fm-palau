@@ -28,13 +28,29 @@ public class Instagram {
 
 	private String link;
 
-	private byte[] pictureBytes;
+	private String pictureThumbnailUrl;
+
+	private String pictureLowUrl;
+
+	private String pictureStandardUrl;
+
+	private byte[] pictureThumbnail;
+
+	private byte[] pictureLow;
+
+	private byte[] pictureStandard;
 
 	@Transient
 	private Drawable image;
 
 	@Transient
-	private Drawable picture;
+	private Drawable pictureThumbnailDrawable;
+
+	@Transient
+	private Drawable pictureLowDrawable;
+
+	@Transient
+	private Drawable pictureStandardDrawable;
 
 	public String getId() {
 		return id;
@@ -84,20 +100,60 @@ public class Instagram {
 		this.date = date;
 	}
 
-	public byte[] getPictureBytes() {
-		return pictureBytes;
-	}
-
-	public void setPictureBytes(byte[] pictureBytes) {
-		this.pictureBytes = pictureBytes;
-	}
-
 	public String getLink() {
 		return link;
 	}
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public String getPictureThumbnailUrl() {
+		return pictureThumbnailUrl;
+	}
+
+	public void setPictureThumbnailUrl(String pictureThumbnailUrl) {
+		this.pictureThumbnailUrl = pictureThumbnailUrl;
+	}
+
+	public String getPictureLowUrl() {
+		return pictureLowUrl;
+	}
+
+	public void setPictureLowUrl(String pictureLowUrl) {
+		this.pictureLowUrl = pictureLowUrl;
+	}
+
+	public String getPictureStandardUrl() {
+		return pictureStandardUrl;
+	}
+
+	public void setPictureStandardUrl(String pictureStandardUrl) {
+		this.pictureStandardUrl = pictureStandardUrl;
+	}
+
+	public byte[] getPictureThumbnail() {
+		return pictureThumbnail;
+	}
+
+	public void setPictureThumbnail(byte[] pictureThumbnail) {
+		this.pictureThumbnail = pictureThumbnail;
+	}
+
+	public byte[] getPictureLow() {
+		return pictureLow;
+	}
+
+	public void setPictureLow(byte[] pictureLow) {
+		this.pictureLow = pictureLow;
+	}
+
+	public byte[] getPictureStandard() {
+		return pictureStandard;
+	}
+
+	public void setPictureStandard(byte[] pictureStandard) {
+		this.pictureStandard = pictureStandard;
 	}
 
 	public Drawable getImage() {
@@ -108,12 +164,28 @@ public class Instagram {
 		this.image = image;
 	}
 
-	public Drawable getPicture() {
-		return picture;
+	public Drawable getPictureThumbnailDrawable() {
+		return pictureThumbnailDrawable;
 	}
 
-	public void setPicture(Drawable picture) {
-		this.picture = picture;
+	public void setPictureThumbnailDrawable(Drawable pictureThumbnailDrawable) {
+		this.pictureThumbnailDrawable = pictureThumbnailDrawable;
+	}
+
+	public Drawable getPictureLowDrawable() {
+		return pictureLowDrawable;
+	}
+
+	public void setPictureLowDrawable(Drawable pictureLowDrawable) {
+		this.pictureLowDrawable = pictureLowDrawable;
+	}
+
+	public Drawable getPictureStandardDrawable() {
+		return pictureStandardDrawable;
+	}
+
+	public void setPictureStandardDrawable(Drawable pictureStandardDrawable) {
+		this.pictureStandardDrawable = pictureStandardDrawable;
 	}
 
 	@Override

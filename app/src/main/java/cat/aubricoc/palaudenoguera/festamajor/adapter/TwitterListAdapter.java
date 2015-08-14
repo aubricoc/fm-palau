@@ -1,6 +1,9 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.format.DateFormat;
@@ -15,8 +18,10 @@ import com.canteratech.androidutils.Activity;
 import java.util.Date;
 import java.util.List;
 
+import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
+import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
@@ -36,7 +41,7 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 
 	@Override
 	public void onBindViewHolder(Holder holder, int position) {
-		Tweet tweet = tweets.get(position);
+		final Tweet tweet = tweets.get(position);
 		Drawable image = tweet.getImage();
 		if (image == null) {
 			if (DataContainer.getUserTwitterImages().isEmpty()) {
@@ -46,8 +51,17 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 		}
 
 		if (image == null) {
-			new LoadImageViewAsyncTask(holder.userImage, tweet).execute(tweet
-					.getUserImage());
+			new LoadImageViewAsyncTask(holder.userImage, new LoadImageViewAsyncTask.OnReceivedImageListener() {
+				@Override
+				public void onReceivedImage(byte[] image, Drawable drawable) {
+					TwitterUser twitterUser = new TwitterUser();
+					twitterUser.setAlias(tweet.getAlias());
+					twitterUser.setImage(image);
+					TwitterUserDao.getInstance().createIfNotExists(twitterUser);
+					tweet.setImage(drawable);
+					DataContainer.getUserTwitterImages().put(tweet.getAlias(), drawable);
+				}
+			}).execute(tweet.getUserImage());
 		} else {
 			tweet.setImage(image);
 			holder.userImage.setVisibility(View.VISIBLE);
@@ -59,6 +73,7 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 		holder.message.setText(Html.fromHtml(tweet.getMessage()));
 		holder.date.setText(getDateDifferenceFromNow(tweet.getDate()));
 
+		holder.card.setTag(tweet);
 	}
 
 	@Override
@@ -87,6 +102,8 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 
 	class Holder extends RecyclerView.ViewHolder {
 
+		CardView card;
+
 		TextView date;
 
 		TextView message;
@@ -99,11 +116,20 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 
 		public Holder(View view) {
 			super(view);
+			card = (CardView) view.findViewById(R.id.tweet_card);
 			userImage = (ImageView) view.findViewById(R.id.tweet_user_image);
 			user = (TextView) view.findViewById(R.id.tweet_user);
 			userAlias = (TextView) view.findViewById(R.id.tweet_user_alias);
 			message = (TextView) view.findViewById(R.id.tweet_message);
 			date = (TextView) view.findViewById(R.id.tweet_date);
+			card.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Tweet tweet = (Tweet) v.getTag();
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet.getLink()));
+					Activity.CURRENT_CONTEXT.startActivity(intent);
+				}
+			});
 		}
 	}
 }

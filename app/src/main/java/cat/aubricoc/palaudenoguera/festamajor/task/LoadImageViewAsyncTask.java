@@ -17,30 +17,15 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.ByteArrayInputStream;
 
-import cat.aubricoc.palaudenoguera.festamajor.dao.InstagramUserDao;
-import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
-import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
-import cat.aubricoc.palaudenoguera.festamajor.model.Instagram;
-import cat.aubricoc.palaudenoguera.festamajor.model.InstagramUser;
-import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
-import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
-
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
-
-	private Tweet tweet;
-
-	private Instagram instagram;
 
 	private ImageView imageView;
 
-	public LoadImageViewAsyncTask(ImageView imageView, Tweet tweet) {
-		this.imageView = imageView;
-		this.tweet = tweet;
-	}
+	private OnReceivedImageListener onReceivedImageListener;
 
-	public LoadImageViewAsyncTask(ImageView imageView, Instagram instagram) {
+	public LoadImageViewAsyncTask(ImageView imageView, OnReceivedImageListener onReceivedImageListener) {
 		this.imageView = imageView;
-		this.instagram = instagram;
+		this.onReceivedImageListener = onReceivedImageListener;
 	}
 
 	@Override
@@ -78,27 +63,17 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 	@Override
 	protected void onPostExecute(byte[] result) {
 		if (result != null) {
-			if (tweet != null) {
-				TwitterUser twitterUser = new TwitterUser();
-				twitterUser.setAlias(tweet.getAlias());
-				twitterUser.setImage(result);
-				TwitterUserDao.getInstance().createIfNotExists(twitterUser);
-				Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(result), null);
-				tweet.setImage(drawable);
-				imageView.setImageDrawable(drawable);
-				imageView.setVisibility(View.VISIBLE);
-				DataContainer.getUserTwitterImages().put(tweet.getAlias(), drawable);
-			} else if (instagram != null) {
-				InstagramUser instagramUser = new InstagramUser();
-				instagramUser.setAlias(instagram.getAlias());
-				instagramUser.setImage(result);
-				InstagramUserDao.getInstance().createIfNotExists(instagramUser);
-				Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(result), null);
-				instagram.setImage(drawable);
-				imageView.setImageDrawable(drawable);
-				imageView.setVisibility(View.VISIBLE);
-				DataContainer.getUserTwitterImages().put(instagram.getAlias(), drawable);
+			Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(result), null);
+			imageView.setImageDrawable(drawable);
+			imageView.setVisibility(View.VISIBLE);
+			if (onReceivedImageListener != null) {
+				onReceivedImageListener.onReceivedImage(result, drawable);
 			}
 		}
+	}
+
+	public interface OnReceivedImageListener {
+
+		void onReceivedImage(byte[] image, Drawable drawable);
 	}
 }
