@@ -104,7 +104,7 @@ public class TwitterFragment extends Fragment {
 
 	private class GetNewTweetsTask extends AsyncTask<Void, Void, List<Tweet>> {
 
-		protected String error;
+		String error;
 
 		@Override
 		protected void onPreExecute() {
@@ -139,11 +139,11 @@ public class TwitterFragment extends Fragment {
 			refreshLayout.setRefreshing(false);
 		}
 
-		protected List<Tweet> searchTweets() {
+		List<Tweet> searchTweets() {
 			return TwitterService.getInstance().getNew();
 		}
 
-		protected void addTweets(List<Tweet> result) {
+		void addTweets(List<Tweet> result) {
 			for (int iter = result.size() - 1; iter >= 0; iter--) {
 				Tweet tweet = result.get(iter);
 				DataContainer.getTweets().add(0, tweet);
@@ -154,12 +154,12 @@ public class TwitterFragment extends Fragment {
 	private class GetOldTweetsTask extends GetNewTweetsTask {
 
 		@Override
-		protected List<Tweet> searchTweets() {
+		List<Tweet> searchTweets() {
 			return TwitterService.getInstance().getOld();
 		}
 
 		@Override
-		protected void addTweets(List<Tweet> result) {
+		void addTweets(List<Tweet> result) {
 			for (Tweet tweet : result) {
 				DataContainer.getTweets().add(tweet);
 			}

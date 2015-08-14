@@ -12,11 +12,11 @@ import cat.aubricoc.palaudenoguera.festamajor.model.Event;
 import cat.aubricoc.palaudenoguera.festamajor.model.Show;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
-public class ScheduleEventsListAdapter {
+class ScheduleEventsListAdapter {
 
-	private ViewGroup container;
+	private final ViewGroup container;
 
-	private List<Event> events;
+	private final List<Event> events;
 
 	public ScheduleEventsListAdapter(ViewGroup container, List<Event> events) {
 		this.container = container;
@@ -34,11 +34,11 @@ public class ScheduleEventsListAdapter {
 		}
 	}
 
-	public View onCreateView(ViewGroup parent) {
+	private View onCreateView(ViewGroup parent) {
 		return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_event_schedule, parent, false);
 	}
 
-	public void onBindViewHolder(Holder holder, Event event) {
+	private void onBindViewHolder(Holder holder, Event event) {
 		holder.time.setText(event.getTime());
 		holder.name.setText(event.getName());
 		holder.description.setText(event.getDescription());
@@ -49,15 +49,15 @@ public class ScheduleEventsListAdapter {
 
 	class Holder {
 
-		TextView time;
+		final TextView time;
 
-		TextView name;
+		final TextView name;
 
-		TextView description;
+		final TextView description;
 
-		ScheduleShowsListAdapter showsAdapter;
+		final ScheduleShowsListAdapter showsAdapter;
 
-		List<Show> shows = new ArrayList<>();
+		final List<Show> shows = new ArrayList<>();
 
 		Holder(View view) {
 			time = (TextView) view.findViewById(R.id.schedule_event_time);

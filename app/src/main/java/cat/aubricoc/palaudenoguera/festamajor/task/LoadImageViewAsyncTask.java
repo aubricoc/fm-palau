@@ -5,23 +5,20 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.canteratech.androidutils.IOUtils;
 import com.canteratech.androidutils.Utils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
 import java.io.ByteArrayInputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
 
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 
-	private ImageView imageView;
+	private final ImageView imageView;
 
-	private OnReceivedImageListener onReceivedImageListener;
+	private final OnReceivedImageListener onReceivedImageListener;
 
 	public LoadImageViewAsyncTask(ImageView imageView, OnReceivedImageListener onReceivedImageListener) {
 		this.imageView = imageView;
@@ -40,19 +37,17 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 			return null;
 		}
 
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(params[0]);
-
 		try {
-			HttpResponse httpResponse = httpClient.execute(httpGet);
+			URL url = new URL(params[0]);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(Constants.CONNECTION_TIMEOUT);
+			conn.setReadTimeout(Constants.SO_TIMEOUT);
 
-			int statusCode = httpResponse.getStatusLine().getStatusCode();
+			int statusCode = conn.getResponseCode();
 
-			if (statusCode == HttpStatus.SC_OK) {
-				HttpEntity entity = httpResponse.getEntity();
-				if (entity != null) {
-					return EntityUtils.toByteArray(entity);
-				}
+			if (statusCode == 200) {
+				return IOUtils.toByteArray(conn.getInputStream());
+
 			}
 		} catch (Exception e) {
 			return null;

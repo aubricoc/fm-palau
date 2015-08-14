@@ -1,6 +1,5 @@
 package cat.aubricoc.palaudenoguera.festamajor.model;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import java.io.ByteArrayInputStream;
@@ -14,13 +13,13 @@ import cat.aubricoc.palaudenoguera.festamajor.dao.TwitterUserDao;
 
 public class DataContainer {
 
+	private static final Map<String, Drawable> userTwitterImages = new HashMap<>();
+
+	private static final Map<String, Drawable> userInstagramImages = new HashMap<>();
+
 	private static List<Tweet> tweets = new ArrayList<>();
 
 	private static List<Instagram> instagrams = new ArrayList<>();
-
-	private static Map<String, Drawable> userTwitterImages = new HashMap<>();
-
-	private static Map<String, Drawable> userInstagramImages = new HashMap<>();
 
 	public static List<Tweet> getTweets() {
 		return tweets;
@@ -46,20 +45,18 @@ public class DataContainer {
 		return userInstagramImages;
 	}
 
-	public static void prepareTwitterUserImages(Context context) {
+	public static void prepareTwitterUserImages() {
 		List<TwitterUser> twitterUsers = TwitterUserDao.getInstance().getAll();
 		for (TwitterUser user : twitterUsers) {
-			Drawable drawable = Drawable.createFromStream(
-					new ByteArrayInputStream(user.getImage()), null);
+			Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(user.getImage()), null);
 			userTwitterImages.put(user.getAlias(), drawable);
 		}
 	}
 
-	public static void prepareInstagramUserImages(Context context) {
+	public static void prepareInstagramUserImages() {
 		List<InstagramUser> instagramUsers = InstagramUserDao.getInstance().getAll();
 		for (InstagramUser user : instagramUsers) {
-			Drawable drawable = Drawable.createFromStream(
-					new ByteArrayInputStream(user.getImage()), null);
+			Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(user.getImage()), null);
 			userInstagramImages.put(user.getAlias(), drawable);
 		}
 	}

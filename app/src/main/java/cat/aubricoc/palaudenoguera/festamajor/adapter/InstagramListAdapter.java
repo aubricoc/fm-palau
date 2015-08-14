@@ -30,7 +30,7 @@ import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
 public class InstagramListAdapter extends RecyclerView.Adapter<InstagramListAdapter.Holder> {
 
-	private List<Instagram> instagrams;
+	private final List<Instagram> instagrams;
 
 	public InstagramListAdapter(List<Instagram> instagrams) {
 		this.instagrams = instagrams;
@@ -49,7 +49,7 @@ public class InstagramListAdapter extends RecyclerView.Adapter<InstagramListAdap
 		Drawable image = instagram.getImage();
 		if (image == null) {
 			if (DataContainer.getUserInstagramImages().isEmpty()) {
-				DataContainer.prepareInstagramUserImages(Activity.CURRENT_CONTEXT);
+				DataContainer.prepareInstagramUserImages();
 			}
 			image = DataContainer.getUserInstagramImages().get(instagram.getAlias());
 		}
@@ -126,19 +126,19 @@ public class InstagramListAdapter extends RecyclerView.Adapter<InstagramListAdap
 
 	class Holder extends RecyclerView.ViewHolder {
 
-		CardView card;
+		final CardView card;
 
-		TextView date;
+		final TextView date;
 
-		TextView message;
+		final TextView message;
 
-		TextView userAlias;
+		final TextView userAlias;
 
-		TextView user;
+		final TextView user;
 
-		ImageView userImage;
+		final ImageView userImage;
 
-		ImageView picture;
+		final ImageView picture;
 
 		public Holder(View view) {
 			super(view);

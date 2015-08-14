@@ -4,28 +4,18 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.canteratech.androidutils.Activity;
+import com.canteratech.androidutils.IOUtils;
 import com.canteratech.androidutils.Utils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,10 +34,14 @@ import cat.aubricoc.palaudenoguera.festamajor2015.R;
 public class TwitterService {
 
 	private static final TwitterService INSTANCE = new TwitterService();
+
 	private static final String TOKEN_URL = "https://api.twitter.com/oauth2/token";
+
 	private static final String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json";
+
 	private static final String URL_TWEET = "https://twitter.com/%s/status/%s";
-	private String query;
+
+	private final String query;
 
 	private TwitterService() {
 		super();
@@ -158,23 +152,34 @@ public class TwitterService {
 			String base64Encoded = Base64.encodeToString(combined.getBytes(),
 					Base64.NO_WRAP);
 
-			HttpPost httpPost = new HttpPost(TOKEN_URL);
-			httpPost.setHeader("Authorization", "Basic " + base64Encoded);
-			httpPost.setHeader("Content-Type",
-					"application/x-www-form-urlencoded;charset=UTF-8");
-			httpPost.setEntity(new StringEntity("grant_type=client_credentials"));
-			String rawAuthorization = getResponseBody(httpPost);
-			String accessToken = getAccessToken(rawAuthorization);
+			URL url = new URL(TOKEN_URL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(Constants.CONNECTION_TIMEOUT);
+			conn.setReadTimeout(Constants.SO_TIMEOUT);
+			conn.setDoOutput(true);
+			conn.setRequestProperty("Authorization", "Basic " + base64Encoded);
+			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+			OutputStream os = conn.getOutputStream();
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+			writer.write("grant_type=client_credentials");
+			writer.flush();
+			writer.close();
+			os.close();
 
-			HttpGet httpGet = new HttpGet(encodedUrl);
+			String json = IOUtils.toString(conn.getInputStream());
+			String accessToken = getAccessToken(json);
 
-			httpGet.setHeader("Authorization", "Bearer " + accessToken);
-			httpGet.setHeader("Content-Type", "application/json");
+			url = new URL(encodedUrl);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(Constants.CONNECTION_TIMEOUT);
+			conn.setReadTimeout(Constants.SO_TIMEOUT);
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+			conn.setRequestProperty("Content-Type", "application/json");
 
-			String result = getResponseBody(httpGet);
+			json = IOUtils.toString(conn.getInputStream());
 
-			return parseTweets(result);
-		} catch (UnsupportedEncodingException e) {
+			return parseTweets(json);
+		} catch (Exception e) {
 			throw new TwitterConnectionException(e);
 		}
 	}
@@ -190,43 +195,6 @@ public class TwitterService {
 			} catch (JSONException e) {
 				throw new TwitterConnectionException(e);
 			}
-		}
-		throw new TwitterConnectionException();
-	}
-
-	private String getResponseBody(HttpRequestBase request) {
-		StringBuilder sb = new StringBuilder();
-		try {
-
-			HttpParams httpParams = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(httpParams,
-					Constants.CONNECTION_TIMEOUT);
-			HttpConnectionParams.setSoTimeout(httpParams, Constants.SO_TIMEOUT);
-
-			HttpClient httpClient = new DefaultHttpClient(httpParams);
-
-			HttpResponse response = httpClient.execute(request);
-			int statusCode = response.getStatusLine().getStatusCode();
-			String reason = response.getStatusLine().getReasonPhrase();
-
-			if (statusCode == 200) {
-
-				HttpEntity entity = response.getEntity();
-				InputStream inputStream = entity.getContent();
-
-				BufferedReader bReader = new BufferedReader(
-						new InputStreamReader(inputStream, "UTF-8"), 8);
-				String line;
-				while ((line = bReader.readLine()) != null) {
-					sb.append(line);
-				}
-				return sb.toString();
-			} else {
-				Log.w(Constants.PROJECT_NAME, "Request to Twitter return "
-						+ statusCode + ": " + reason);
-			}
-		} catch (IOException e) {
-			throw new TwitterConnectionException(e);
 		}
 		throw new TwitterConnectionException();
 	}
@@ -250,7 +218,10 @@ public class TwitterService {
 				JSONObject user = jsonMessage.getJSONObject("user");
 				tweet.setUser(getString(user, "name"));
 				tweet.setAlias(getString(user, "screen_name"));
-				tweet.setUserImage(getString(user, "profile_image_url").replace("_normal", ""));
+				String imageUrl = getString(user, "profile_image_url");
+				if (imageUrl != null) {
+					tweet.setUserImage(imageUrl.replace("_normal", ""));
+				}
 				tweet.setLink(String.format(URL_TWEET, tweet.getAlias(),
 						tweet.getId()));
 				if (tweet.getAlias() != null) {
@@ -275,7 +246,7 @@ public class TwitterService {
 		}
 	}
 
-	protected String getString(JSONObject jsonObject, String key) {
+	private String getString(JSONObject jsonObject, String key) {
 		try {
 			return jsonObject.getString(key);
 		} catch (JSONException e) {

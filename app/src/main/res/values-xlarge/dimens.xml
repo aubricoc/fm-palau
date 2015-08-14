@@ -1,7 +1,3 @@
 <resources>
-
     <dimen name="margin">64dp</dimen>
-    <dimen name="photo_width">300dp</dimen>
-    <dimen name="photo_height">300dp</dimen>
-
 </resources>

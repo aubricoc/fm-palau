@@ -1,0 +1,104 @@
+{
+  "days": [
+    {
+      "date": "Divendres, 28 d\u0027agost",
+      "events": [
+        {
+          "description": "(Venda anticipada de tiquets per la Comissió)",
+          "name": "Sopar de Jovent",
+          "shows": [],
+          "time": "22:00"
+        },
+        {
+          "description": "amb músics Pallaresos",
+          "name": "Nit Pallaresa",
+          "shows": [
+            {
+              "name": "Los 1000 Hombres"
+            },
+            {
+              "name": "DJ Bacardit"
+            }
+          ],
+          "time": "01:00"
+        }
+      ]
+    },
+    {
+      "date": "Dissabte, 29 d\u0027agost",
+      "events": [
+        {
+          "description": "Inflables per als infants i concurs de butifarra per als més grans (a la Placeta)",
+          "name": "Castells Inflables i Butifarra",
+          "shows": [],
+          "time": "17:00"
+        },
+        {
+          "description": "amb els grups",
+          "name": "Ball de Festa Major",
+          "shows": [
+            {
+              "name": "Trio Coral"
+            },
+            {
+              "name": "ELS OLD STAR"
+            },
+            {
+              "name": "DJ Judy"
+            }
+          ],
+          "time": "23:30"
+        }
+      ]
+    },
+    {
+      "date": "Diumenge, 30 d\u0027agost",
+      "events": [
+        {
+          "name": "Missa de Festa Major",
+          "shows": [],
+          "time": "13:00"
+        },
+        {
+          "name": "Gran Plega",
+          "shows": [],
+          "time": "14:00"
+        },
+        {
+          "description": "Durant el ball de tarda es realitzarà la ballada del Contrapàs de Palau de Noguera",
+          "name": "Lluït Ball de Tarda",
+          "shows": [
+            {
+              "name": "Zafiro Trio"
+            }
+          ],
+          "time": "19:30"
+        }
+      ]
+    },
+    {
+      "date": "Dimecres, 2 de setembre",
+      "events": [
+        {
+          "name": "Cucanyes per la canalla",
+          "shows": [],
+          "time": "17:00"
+        },
+        {
+          "name": "Sopar de germanor",
+          "shows": [],
+          "time": "22:00"
+        },
+        {
+          "name": "Ball de Fi de Festa",
+          "shows": [
+            {
+              "name": "Duet Esquitx"
+            }
+          ],
+          "time": "24:00"
+        }
+      ]
+    }
+  ]
+}

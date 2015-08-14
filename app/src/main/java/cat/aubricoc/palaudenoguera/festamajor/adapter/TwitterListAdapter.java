@@ -28,7 +28,7 @@ import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
 public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.Holder> {
 
-	private List<Tweet> tweets;
+	private final List<Tweet> tweets;
 
 	public TwitterListAdapter(List<Tweet> tweets) {
 		this.tweets = tweets;
@@ -47,7 +47,7 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 		Drawable image = tweet.getImage();
 		if (image == null) {
 			if (DataContainer.getUserTwitterImages().isEmpty()) {
-				DataContainer.prepareTwitterUserImages(Activity.CURRENT_CONTEXT);
+				DataContainer.prepareTwitterUserImages();
 			}
 			image = DataContainer.getUserTwitterImages().get(tweet.getAlias());
 		}
@@ -104,17 +104,17 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 
 	class Holder extends RecyclerView.ViewHolder {
 
-		CardView card;
+		final CardView card;
 
-		TextView date;
+		final TextView date;
 
-		TextView message;
+		final TextView message;
 
-		TextView userAlias;
+		final TextView userAlias;
 
-		TextView user;
+		final TextView user;
 
-		ImageView userImage;
+		final ImageView userImage;
 
 		public Holder(View view) {
 			super(view);

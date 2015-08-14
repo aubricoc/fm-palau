@@ -3,26 +3,15 @@ package cat.aubricoc.palaudenoguera.festamajor.service;
 import android.util.Log;
 
 import com.canteratech.androidutils.Activity;
+import com.canteratech.androidutils.IOUtils;
 import com.canteratech.androidutils.Utils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +31,7 @@ public class InstagramService {
 
 	private static final String SEARCH_URL = "https://api.instagram.com/v1/tags/%s/media/recent";
 
-	private String query;
+	private final String query;
 
 	private InstagramService() {
 		super();
@@ -120,50 +109,17 @@ public class InstagramService {
 				encodedUrl += "&max_tag_id=" + maxId;
 			}
 
-			HttpGet httpGet = new HttpGet(encodedUrl);
-			String result = getResponseBody(httpGet);
+			URL url = new URL(encodedUrl);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(Constants.CONNECTION_TIMEOUT);
+			conn.setReadTimeout(Constants.SO_TIMEOUT);
 
-			return parseInstagrams(result);
-		} catch (UnsupportedEncodingException e) {
+			String json = IOUtils.toString(conn.getInputStream());
+
+			return parseInstagrams(json);
+		} catch (Exception e) {
 			throw new InstagramConnectionException(e);
 		}
-	}
-
-	private String getResponseBody(HttpRequestBase request) {
-		StringBuilder sb = new StringBuilder();
-		try {
-
-			HttpParams httpParams = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(httpParams,
-					Constants.CONNECTION_TIMEOUT);
-			HttpConnectionParams.setSoTimeout(httpParams, Constants.SO_TIMEOUT);
-
-			HttpClient httpClient = new DefaultHttpClient(httpParams);
-
-			HttpResponse response = httpClient.execute(request);
-			int statusCode = response.getStatusLine().getStatusCode();
-			String reason = response.getStatusLine().getReasonPhrase();
-
-			if (statusCode == 200) {
-
-				HttpEntity entity = response.getEntity();
-				InputStream inputStream = entity.getContent();
-
-				BufferedReader bReader = new BufferedReader(
-						new InputStreamReader(inputStream, "UTF-8"), 8);
-				String line;
-				while ((line = bReader.readLine()) != null) {
-					sb.append(line);
-				}
-				return sb.toString();
-			} else {
-				Log.w(Constants.PROJECT_NAME, "Request to Twitter return "
-						+ statusCode + ": " + reason);
-			}
-		} catch (IOException e) {
-			throw new InstagramConnectionException(e);
-		}
-		throw new InstagramConnectionException();
 	}
 
 	private List<Instagram> parseInstagrams(String json) {
@@ -175,8 +131,10 @@ public class InstagramService {
 				JSONObject jsonMessage = jsonMessages.getJSONObject(iter);
 				Instagram instagram = new Instagram();
 				String id = getString(jsonMessage, "id");
-				id = id.substring(0, id.indexOf("_"));
-				instagram.setId(id);
+				if (id != null) {
+					id = id.substring(0, id.indexOf("_"));
+					instagram.setId(id);
+				}
 				instagram.setMessage(getString(jsonMessage.getJSONObject("caption"), "text"));
 				instagram.setDate(getInstagramDate(jsonMessage.getString("created_time")));
 				JSONObject user = jsonMessage.getJSONObject("user");
@@ -202,7 +160,7 @@ public class InstagramService {
 		return date;
 	}
 
-	protected String getString(JSONObject jsonObject, String key) {
+	private String getString(JSONObject jsonObject, String key) {
 		try {
 			return jsonObject.getString(key);
 		} catch (JSONException e) {

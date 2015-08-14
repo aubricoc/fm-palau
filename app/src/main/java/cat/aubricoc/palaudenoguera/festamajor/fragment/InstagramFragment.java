@@ -103,7 +103,7 @@ public class InstagramFragment extends Fragment {
 
 	private class GetNewInstagramsTask extends AsyncTask<Void, Void, List<Instagram>> {
 
-		protected String error;
+		String error;
 
 		@Override
 		protected void onPreExecute() {
@@ -138,11 +138,11 @@ public class InstagramFragment extends Fragment {
 			refreshLayout.setRefreshing(false);
 		}
 
-		protected List<Instagram> searchInstagrams() {
+		List<Instagram> searchInstagrams() {
 			return InstagramService.getInstance().getNew();
 		}
 
-		protected void addInstagrams(List<Instagram> result) {
+		void addInstagrams(List<Instagram> result) {
 			for (int iter = result.size() - 1; iter >= 0; iter--) {
 				Instagram instagram = result.get(iter);
 				DataContainer.getInstagrams().add(0, instagram);
@@ -153,12 +153,12 @@ public class InstagramFragment extends Fragment {
 	private class GetOldInstagramsTask extends GetNewInstagramsTask {
 
 		@Override
-		protected List<Instagram> searchInstagrams() {
+		List<Instagram> searchInstagrams() {
 			return InstagramService.getInstance().getOld();
 		}
 
 		@Override
-		protected void addInstagrams(List<Instagram> result) {
+		void addInstagrams(List<Instagram> result) {
 			for (Instagram instagram : result) {
 				DataContainer.getInstagrams().add(instagram);
 			}

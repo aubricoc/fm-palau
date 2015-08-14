@@ -16,9 +16,9 @@ import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
 public class ScheduleDaysListAdapter {
 
-	private ViewGroup container;
+	private final ViewGroup container;
 
-	private List<Day> days;
+	private final List<Day> days;
 
 	public ScheduleDaysListAdapter(ViewGroup container, List<Day> days) {
 		this.container = container;
@@ -26,7 +26,7 @@ public class ScheduleDaysListAdapter {
 		notifyDataSetChanged();
 	}
 
-	public void notifyDataSetChanged() {
+	private void notifyDataSetChanged() {
 		container.removeAllViews();
 		int iter = 0;
 		for (Day day : days) {
@@ -38,11 +38,11 @@ public class ScheduleDaysListAdapter {
 		}
 	}
 
-	public View onCreateView(ViewGroup parent) {
+	private View onCreateView(ViewGroup parent) {
 		return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_day_schedule, parent, false);
 	}
 
-	public void onBindViewHolder(Holder holder, Day day, int position) {
+	private void onBindViewHolder(Holder holder, Day day, int position) {
 		holder.card.setCardBackgroundColor(Utils.getComplementaryColor(position));
 		holder.date.setText(day.getDate());
 		holder.events.clear();
@@ -52,13 +52,13 @@ public class ScheduleDaysListAdapter {
 
 	class Holder {
 
-		CardView card;
+		final CardView card;
 
-		TextView date;
+		final TextView date;
 
-		ScheduleEventsListAdapter eventsAdapter;
+		final ScheduleEventsListAdapter eventsAdapter;
 
-		List<Event> events = new ArrayList<>();
+		final List<Event> events = new ArrayList<>();
 
 		Holder(View view) {
 			card = (CardView) view.findViewById(R.id.schedule_card);

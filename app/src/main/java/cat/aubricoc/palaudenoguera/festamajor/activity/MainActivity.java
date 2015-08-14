@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void showInfo() {
+	private void showInfo() {
 		Dialog dialog = new Dialog(Activity.CURRENT_CONTEXT);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setCancelable(true);

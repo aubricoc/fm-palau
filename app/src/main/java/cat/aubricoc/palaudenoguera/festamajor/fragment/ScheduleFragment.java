@@ -6,14 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import com.canteratech.androidutils.IOUtils;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import cat.aubricoc.palaudenoguera.festamajor.adapter.ScheduleDaysListAdapter;
 import cat.aubricoc.palaudenoguera.festamajor.model.Day;
-import cat.aubricoc.palaudenoguera.festamajor.model.Event;
-import cat.aubricoc.palaudenoguera.festamajor.model.Show;
+import cat.aubricoc.palaudenoguera.festamajor.model.Schedule;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
 public class ScheduleFragment extends Fragment {
@@ -23,78 +25,21 @@ public class ScheduleFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_schedule, parent, false);
 
 		ViewGroup scheduleList = (ViewGroup) view.findViewById(R.id.schedule_list);
-		new ScheduleDaysListAdapter(scheduleList, readDays());
+		List<Day> days = readDays();
+		new ScheduleDaysListAdapter(scheduleList, days);
 
 		return view;
 	}
 
 	private List<Day> readDays() {
-		List<Day> days = new ArrayList<>();
-		int iterDay = 0;
-		boolean noMore = false;
-		while (!noMore) {
-			iterDay++;
-			String dayString = getScheduleString("day_" + iterDay);
-			if (dayString == null) {
-				noMore = true;
-			} else {
-				Day day = new Day();
-				day.setDate(dayString);
-				day.setEvents(readEvents(iterDay));
-				days.add(day);
-			}
-		}
-		return days;
-	}
-
-	private List<Event> readEvents(int iterDay) {
-		List<Event> events = new ArrayList<>();
-		int iterEvent = 0;
-		boolean noMore = false;
-		while (!noMore) {
-			iterEvent++;
-			String timeString = getScheduleString("day_" + iterDay + "_event_" + iterEvent + "_time");
-			if (timeString == null) {
-				noMore = true;
-			} else {
-				Event event = new Event();
-				event.setTime(timeString);
-				event.setName(getScheduleString("day_" + iterDay + "_event_" + iterEvent + "_name"));
-				event.setDescription(getScheduleString("day_" + iterDay + "_event_" + iterEvent + "_description"));
-				event.setShows(readShows(iterDay, iterEvent));
-				events.add(event);
-			}
-		}
-		return events;
-	}
-
-	private List<Show> readShows(int iterDay, int iterEvent) {
-		List<Show> shows = new ArrayList<>();
-		int iterShow = 0;
-		boolean noMore = false;
-		while (!noMore) {
-			iterShow++;
-			String showString = getScheduleString("day_" + iterDay + "_event_" + iterEvent + "_show_" + iterShow);
-			if (showString == null) {
-				noMore = true;
-			} else {
-				Show show = new Show();
-				show.setName(showString);
-				shows.add(show);
-			}
-		}
-		return shows;
-	}
-
-	private String getScheduleString(String key) {
 		try {
-			Field field = R.string.class.getField(key);
-			int id = (int) field.get(null);
-			return getString(id);
-		} catch (NoSuchFieldException e) {
-			return null;
-		} catch (IllegalAccessException | IllegalArgumentException e) {
-			throw new IllegalStateException(e);
+			InputStream inputStream = getResources().openRawResource(R.raw.schedule);
+			String json = IOUtils.toString(inputStream);
+			Gson gson = new Gson();
+			Schedule schedule = gson.fromJson(json, Schedule.class);
+			return schedule.getDays();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

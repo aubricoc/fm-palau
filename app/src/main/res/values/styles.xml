@@ -6,19 +6,10 @@
         <item name="colorAccent">@color/secondary</item>
     </style>
 
-    <style name="dialog_action_bar">
-        <item name="android:background">@color/primary</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:textColor">@color/font_white</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <style name="dialog_text">
-        <item name="android:padding">10dp</item>
-        <item name="android:background">@color/background_white</item>
-        <item name="android:textColor">@color/font_black</item>
+    <style name="text_dialog">
+        <item name="android:padding">@dimen/margin</item>
+        <item name="android:background">@color/background_material_light</item>
+        <item name="android:textColor">@color/primary_text_default_material_light</item>
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -52,19 +43,6 @@
     <style name="text_card_great" parent="@style/text_card">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/secondary_text_default_material_dark</item>
-    </style>
-
-    <style name="text_message">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/font_black</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">30dp</item>
-    </style>
-
-    <style name="button_retry">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/font_black</item>
-        <item name="android:gravity">center</item>
     </style>
 
 </resources>

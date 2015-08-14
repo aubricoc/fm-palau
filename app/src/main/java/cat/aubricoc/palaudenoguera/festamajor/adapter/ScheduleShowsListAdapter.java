@@ -13,11 +13,11 @@ import java.util.List;
 import cat.aubricoc.palaudenoguera.festamajor.model.Show;
 import cat.aubricoc.palaudenoguera.festamajor2015.R;
 
-public class ScheduleShowsListAdapter {
+class ScheduleShowsListAdapter {
 
-	private ViewGroup container;
+	private final ViewGroup container;
 
-	private List<Show> shows;
+	private final List<Show> shows;
 
 	public ScheduleShowsListAdapter(ViewGroup container, List<Show> shows) {
 		this.container = container;
@@ -35,17 +35,17 @@ public class ScheduleShowsListAdapter {
 		}
 	}
 
-	public View onCreateView(ViewGroup parent) {
+	private View onCreateView(ViewGroup parent) {
 		return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_show_schedule, parent, false);
 	}
 
-	public void onBindViewHolder(Holder holder, Show show) {
+	private void onBindViewHolder(Holder holder, Show show) {
 		holder.name.setText(show.getName());
 	}
 
 	class Holder {
 
-		TextView name;
+		final TextView name;
 
 		Holder(View view) {
 			name = (TextView) view;
