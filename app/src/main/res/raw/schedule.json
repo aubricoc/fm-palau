@@ -10,8 +10,8 @@
           "time": "22:00"
         },
         {
-          "description": "amb músics Pallaresos",
-          "name": "Nit Pallaresa",
+          "description": "amb",
+          "name": "Nit Jove",
           "shows": [
             {
               "name": "Los 1000 Hombres"
@@ -28,8 +28,20 @@
       "date": "Dissabte, 29 d\u0027agost",
       "events": [
         {
-          "description": "Inflables per als infants i concurs de butifarra per als més grans (a la Placeta)",
-          "name": "Castells Inflables i Butifarra",
+          "description": "Inflables per als infants (a la Placeta)",
+          "name": "Castells Inflables",
+          "shows": [],
+          "time": "17:00"
+        },
+        {
+          "description": "Concurs de butifarra per als més grans (a la Placeta)",
+          "name": "Concurs de Butifarra",
+          "shows": [],
+          "time": "17:00"
+        },
+        {
+          "description": "A càrrec de Montse Santamaria (a la Placeta)",
+          "name": "Xerrada sobre la Cofraria del Gloriós Sant Antolí",
           "shows": [],
           "time": "17:00"
         },
@@ -80,12 +92,17 @@
       "date": "Dimecres, 2 de setembre",
       "events": [
         {
+          "name": "Missa Solemne en Honor a Sant Antolí",
+          "shows": [],
+          "time": "17:00"
+        },
+        {
           "name": "Cucanyes per la canalla",
           "shows": [],
           "time": "17:00"
         },
         {
-          "name": "Sopar de germanor",
+          "name": "Sopar de Germanor",
           "shows": [],
           "time": "22:00"
         },

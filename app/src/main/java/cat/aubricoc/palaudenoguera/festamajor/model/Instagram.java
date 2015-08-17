@@ -13,7 +13,6 @@ import java.util.Date;
 public class Instagram {
 
 	@Id
-	@OrderBy(descendant = true)
 	private String id;
 
 	private String userImage;
@@ -24,6 +23,7 @@ public class Instagram {
 
 	private String message;
 
+	@OrderBy(descendant = true)
 	private Date date;
 
 	private String link;
