@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.canteratech.apa.DatabaseReflection;
-import com.canteratech.apa.EntityInfo;
 
 import java.util.List;
 
@@ -27,8 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		Log.i(Constants.PROJECT_NAME, "Create DB...");
 
-		List<String> createTables = DatabaseReflection.getInstance()
-				.prepareCreateTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
+		List<String> createTables = DatabaseReflection.getInstance().prepareCreateTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
 
 		for (String sql : createTables) {
 			db.execSQL(sql);
@@ -39,17 +37,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to "
-				+ newVersion + "...");
+		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to " + newVersion + "...");
 
 		if (oldVersion < 2) {
-			EntityInfo tweetInfo = EntityInfo.getEntityInfo(Tweet.class);
-			EntityInfo twitterUserInfo = EntityInfo.getEntityInfo(TwitterUser.class);
-			db.delete(tweetInfo.getTableName(), null, null);
-			db.delete(twitterUserInfo.getTableName(), null, null);
+			List<String> dropTables = DatabaseReflection.getInstance().prepareDropTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
+			for (String sql : dropTables) {
+				db.execSQL(sql);
+			}
+			List<String> createTables = DatabaseReflection.getInstance().prepareCreateTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
+			for (String sql : createTables) {
+				db.execSQL(sql);
+			}
 		}
 
-		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to "
-				+ newVersion + "...OK");
+		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to " + newVersion + "...OK");
 	}
 }
