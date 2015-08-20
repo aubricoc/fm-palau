@@ -1,3 +1,7 @@
 <resources>
-    <dimen name="margin">48dp</dimen>
+    <dimen name="margin">24dp</dimen>
+    <dimen name="text_size_normal">24sp</dimen>
+    <dimen name="text_size_small">21sp</dimen>
+    <dimen name="text_size_big">30sp</dimen>
+    <dimen name="text_size_great">36sp</dimen>
 </resources>
