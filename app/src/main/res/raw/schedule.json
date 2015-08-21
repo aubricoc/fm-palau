@@ -10,8 +10,8 @@
           "time": "22:00"
         },
         {
-          "description": "amb",
-          "name": "Nit Jove",
+          "description": "amb músics pallaresos",
+          "name": "Nit Pallaresa",
           "shows": [
             {
               "name": "Los 1000 Hombres"
@@ -88,7 +88,7 @@
         {
           "name": "Missa Solemne en Honor a Sant Antolí",
           "shows": [],
-          "time": "17:00"
+          "time": "12:00"
         },
         {
           "name": "Cucanyes per la canalla",
@@ -101,6 +101,7 @@
           "time": "22:00"
         },
         {
+          "description": "amb",
           "name": "Ball de Fi de Festa",
           "shows": [
             {
