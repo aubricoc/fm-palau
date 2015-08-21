@@ -10,8 +10,8 @@
           "time": "22:00"
         },
         {
-          "description": "amb músics pallaresos",
-          "name": "Nit Pallaresa",
+          "description": "amb",
+          "name": "Nit Jove",
           "shows": [
             {
               "name": "Los 1000 Hombres"
@@ -101,7 +101,7 @@
           "time": "22:00"
         },
         {
-          "description": "amb",
+          "description": "amb el grup",
           "name": "Ball de Fi de Festa",
           "shows": [
             {
