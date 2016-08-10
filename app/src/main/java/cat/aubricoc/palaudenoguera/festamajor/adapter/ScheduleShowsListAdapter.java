@@ -11,7 +11,7 @@ import com.canteratech.androidutils.Activity;
 import java.util.List;
 
 import cat.aubricoc.palaudenoguera.festamajor.model.Show;
-import cat.aubricoc.palaudenoguera.festamajor2015.R;
+import cat.aubricoc.palaudenoguera.festamajor2016.R;
 
 class ScheduleShowsListAdapter {
 

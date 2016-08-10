@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FM Palau 15</string>
-    <string name="app_title">Palau de Noguera 2015</string>
-    <string name="app_name_large">Festa Major Palau de Noguera 2015</string>
+    <string name="app_name">FM Palau 16</string>
+    <string name="app_title">Palau de Noguera 2016</string>
+    <string name="app_name_large">Festa Major Palau de Noguera 2016</string>
     <string name="hashtag">#palaueslaclau</string>
     <string name="title_programa">Programa</string>
     <string name="title_twitter">Twitter</string>
-    <string name="title_instagram">Instagram</string>
     <string name="tweet_user_image">User Image</string>
-    <string name="instagram_user_image">User Image</string>
-    <string name="instagram_picture">Picture</string>
     <string name="info">Informació</string>
-    <string name="info_text">La Comissió de Festes Contrapàs de Palau de Noguera es reserva el dret d\'alterar el programa.\n\nPiula a Twitter utilitzant el hashtag #palaueslaclau o penja fotos a Instagram amb el hashtag #palaueslaclau.\n\nDegut a restriccions de Twitter només es mostrarán piulades de l\'última setmana.</string>
+    <string name="info_text">La Comissió de Festes Contrapàs de Palau de Noguera es reserva el dret d\'alterar el programa.\n\nPiula a Twitter utilitzant el hashtag #palaueslaclau.\n\nDegut a restriccions de Twitter només es mostraran piulades de l\'última setmana.</string>
     <string name="no_tweets">No hi ha tweets amb el hashtag #palaueslaclau.</string>
-    <string name="no_instagrams">No hi ha fotos amb el hashtag #palaueslaclau.</string>
 
 </resources>

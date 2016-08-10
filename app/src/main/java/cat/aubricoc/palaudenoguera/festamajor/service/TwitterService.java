@@ -29,7 +29,7 @@ import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.exception.TwitterConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
-import cat.aubricoc.palaudenoguera.festamajor2015.R;
+import cat.aubricoc.palaudenoguera.festamajor2016.R;
 
 public class TwitterService {
 

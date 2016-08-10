@@ -21,7 +21,7 @@ import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.service.TwitterService;
-import cat.aubricoc.palaudenoguera.festamajor2015.R;
+import cat.aubricoc.palaudenoguera.festamajor2016.R;
 
 public class TwitterFragment extends Fragment {
 

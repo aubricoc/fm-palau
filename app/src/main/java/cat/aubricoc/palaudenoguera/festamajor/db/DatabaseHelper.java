@@ -9,8 +9,6 @@ import com.canteratech.apa.DatabaseReflection;
 
 import java.util.List;
 
-import cat.aubricoc.palaudenoguera.festamajor.model.Instagram;
-import cat.aubricoc.palaudenoguera.festamajor.model.InstagramUser;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
@@ -26,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		Log.i(Constants.PROJECT_NAME, "Create DB...");
 
-		List<String> createTables = DatabaseReflection.getInstance().prepareCreateTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
+		List<String> createTables = DatabaseReflection.getInstance().prepareCreateTables(Tweet.class, TwitterUser.class);
 
 		for (String sql : createTables) {
 			db.execSQL(sql);
@@ -39,16 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to " + newVersion + "...");
 
-		if (oldVersion < 2) {
-			List<String> dropTables = DatabaseReflection.getInstance().prepareDropTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
-			for (String sql : dropTables) {
-				db.execSQL(sql);
-			}
-			List<String> createTables = DatabaseReflection.getInstance().prepareCreateTables(Tweet.class, TwitterUser.class, Instagram.class, InstagramUser.class);
-			for (String sql : createTables) {
-				db.execSQL(sql);
-			}
-		}
+		// No DB v2
 
 		Log.i(Constants.PROJECT_NAME, "Upgrade DB from " + oldVersion + " to " + newVersion + "...OK");
 	}

@@ -2,5 +2,4 @@
 <resources>
     <string name="connection_error">No hi ha connexió en aquest moment</string>
     <string name="twitter_connection_error">No s\'ha pogut establir la connexió amb Twitter</string>
-    <string name="instagram_connection_error">No s\'ha pogut establir la connexió amb Instagram</string>
 </resources>

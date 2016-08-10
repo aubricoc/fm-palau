@@ -1,6 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.exception;
 
-import cat.aubricoc.palaudenoguera.festamajor2015.R;
+import cat.aubricoc.palaudenoguera.festamajor2016.R;
 
 public class TwitterConnectionException extends ConnectionException {
 

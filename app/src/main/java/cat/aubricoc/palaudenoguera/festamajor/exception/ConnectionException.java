@@ -1,8 +1,8 @@
 package cat.aubricoc.palaudenoguera.festamajor.exception;
 
-import cat.aubricoc.palaudenoguera.festamajor2015.R;
-
 import com.canteratech.androidutils.Activity;
+
+import cat.aubricoc.palaudenoguera.festamajor2016.R;
 
 public class ConnectionException extends RuntimeException {
 

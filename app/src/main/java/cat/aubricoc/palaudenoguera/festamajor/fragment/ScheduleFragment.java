@@ -16,7 +16,7 @@ import java.util.List;
 import cat.aubricoc.palaudenoguera.festamajor.adapter.ScheduleDaysListAdapter;
 import cat.aubricoc.palaudenoguera.festamajor.model.Day;
 import cat.aubricoc.palaudenoguera.festamajor.model.Schedule;
-import cat.aubricoc.palaudenoguera.festamajor2015.R;
+import cat.aubricoc.palaudenoguera.festamajor2016.R;
 
 public class ScheduleFragment extends Fragment {
 

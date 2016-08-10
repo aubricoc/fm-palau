@@ -24,7 +24,7 @@ import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
-import cat.aubricoc.palaudenoguera.festamajor2015.R;
+import cat.aubricoc.palaudenoguera.festamajor2016.R;
 
 public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.Holder> {
 

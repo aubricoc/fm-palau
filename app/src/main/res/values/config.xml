@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<string name="twitter_query">from:FMPalau OR #FMPalau OR #palaueros OR @FMPalau</string>-->
-    <string name="twitter_query">#palaueslaclau</string>
-    <!--<string name="twitter_query">#verano</string>-->
+    <string name="twitter_query">#etfelicitofill</string>
     <string name="twitter_api_key">ydjA5Lw3KpwfxbA5ugGFZHxSB</string>
     <string name="twitter_api_secret">0CnYeq9E3uU4vYalskElJqVfLVeXfKWgOqlqZgkjrVPWgIi32P</string>
-
-    <string name="instagram_query">palaueslaclau</string>
-    <!--<string name="instagram_query">verano</string>-->
-    <string name="instagram_api_key">ad7d06d2197c488fb08cbf0db1426f41</string>
-
 </resources>
