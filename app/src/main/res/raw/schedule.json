@@ -1,23 +1,26 @@
 {
   "days": [
     {
-      "date": "Divendres, 28 d\u0027agost",
+      "date": "Divendres, 26 d\u0027agost",
       "events": [
         {
-          "description": "(Venda anticipada de tiquets per la Comissió)",
-          "name": "Sopar de Jovent",
+          "description": "(venda de tiquets a la Comissió)",
+          "name": "Sopar del jovent",
           "shows": [],
           "time": "22:00"
         },
         {
           "description": "amb",
-          "name": "Nit Jove",
+          "name": "NIT JOVE",
           "shows": [
             {
-              "name": "Los 1000 Hombres"
+              "name": "NO FOTIS"
             },
             {
-              "name": "DJ Bacardit"
+              "name": "<small>Batucada Diables de les Corts</small>"
+            },
+            {
+              "name": "DJ Duranium"
             }
           ],
           "time": "01:00"
@@ -25,32 +28,32 @@
       ]
     },
     {
-      "date": "Dissabte, 29 d\u0027agost",
+      "date": "Dissabte, 27 d\u0027agost",
       "events": [
         {
-          "description": "Inflables per als infants (a la Placeta)",
-          "name": "Castells Inflables",
+          "description": "i altres activitats",
+          "name": "MASTERCLASS DE ZUMBA",
           "shows": [],
-          "time": "17:00"
+          "time": "18:30"
         },
         {
-          "description": "A càrrec de Montse Santamaria (a la Placeta)",
-          "name": "Xerrada sobre la Cofraria del Gloriós Sant Antolí",
+          "description": "(obert de dilluns a dissabte de 18:00 a 21:00, i diumenge de 12:00 a 14:00)",
+          "name": "Inauguració de les exposicions de manualitats",
           "shows": [],
-          "time": "17:00"
+          "time": ""
         },
         {
-          "description": "amb els grups",
+          "description": "amb",
           "name": "Ball de Festa Major",
           "shows": [
             {
-              "name": "Trio Coral"
+              "name": "ALTEA TRIO"
             },
             {
               "name": "ELS OLD STAR"
             },
             {
-              "name": "DJ Judy"
+              "name": "DJLUSO"
             }
           ],
           "time": "23:30"
@@ -58,7 +61,7 @@
       ]
     },
     {
-      "date": "Diumenge, 30 d\u0027agost",
+      "date": "Diumenge, 28 d\u0027agost",
       "events": [
         {
           "name": "Missa de Festa Major",
@@ -71,11 +74,11 @@
           "time": "14:00"
         },
         {
-          "description": "Durant el ball de tarda es realitzarà la ballada del Contrapàs de Palau de Noguera",
-          "name": "Lluït Ball de Tarda",
+          "description": "Durant el ball es realitzarà la ballada del Contrapàs de Palau de Noguera",
+          "name": "Lluït ball de tarda",
           "shows": [
             {
-              "name": "Zafiro Trio"
+              "name": "ZAFIRO 3"
             }
           ],
           "time": "19:30"
@@ -83,10 +86,10 @@
       ]
     },
     {
-      "date": "Dimecres, 2 de setembre",
+      "date": "Dilluns, 29 d\u0027agost",
       "events": [
         {
-          "name": "Missa Solemne en Honor a Sant Antolí",
+          "name": "Missa solemne en honor a Sant Joan Baptista",
           "shows": [],
           "time": "12:00"
         },
@@ -101,14 +104,14 @@
           "time": "22:00"
         },
         {
-          "description": "amb el grup",
-          "name": "Ball de Fi de Festa",
+          "description": "amb",
+          "name": "Ball de fi de festa",
           "shows": [
             {
-              "name": "Duet Esquitx"
+              "name": "DUET ESQUITX"
             }
           ],
-          "time": "24:00"
+          "time": "00:00"
         }
       ]
     }

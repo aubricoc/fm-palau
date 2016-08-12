@@ -1,6 +1,7 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
 import android.graphics.Typeface;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ class ScheduleShowsListAdapter {
 	}
 
 	private void onBindViewHolder(Holder holder, Show show) {
-		holder.name.setText(show.getName());
+		holder.name.setText(Html.fromHtml(show.getName()));
 	}
 
 	class Holder {
