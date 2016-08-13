@@ -10,4 +10,8 @@
     <color name="complementary_4">#BB557733</color>
     <color name="complementary_5">#BB773355</color>
     <color name="complementary_6">#BB775533</color>
+
+    <color name="grey_50">#fffafafa</color>
+    <color name="black">#de000000</color>
+    <color name="white">#b3ffffff</color>
 </resources>
