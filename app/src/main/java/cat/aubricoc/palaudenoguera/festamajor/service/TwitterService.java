@@ -1,11 +1,8 @@
 package cat.aubricoc.palaudenoguera.festamajor.service;
 
+import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
-
-import com.canteratech.androidutils.Activity;
-import com.canteratech.androidutils.IOUtils;
-import com.canteratech.androidutils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,11 +26,11 @@ import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.exception.TwitterConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import cat.aubricoc.palaudenoguera.festamajor.utils.IOUtils;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 public class TwitterService {
-
-	private static final TwitterService INSTANCE = new TwitterService();
 
 	private static final String TOKEN_URL = "https://api.twitter.com/oauth2/token";
 
@@ -43,21 +40,27 @@ public class TwitterService {
 
 	private final String query;
 
-	private TwitterService() {
+	private Context context;
+
+	private TweetDao tweetDao;
+
+	private TwitterService(Context context) {
 		super();
-		query = Activity.CURRENT_CONTEXT.getString(R.string.twitter_query);
+		this.query = context.getString(R.string.twitter_query);
+		this.context = context;
+		this.tweetDao = TweetDao.newInstance(context);
 	}
 
-	public static TwitterService getInstance() {
-		return INSTANCE;
+	public static TwitterService newInstance(Context context) {
+		return new TwitterService(context);
 	}
 
 	public List<Tweet> getAll() {
-		return TweetDao.getInstance().getAll();
+		return tweetDao.getAll();
 	}
 
 	public List<Tweet> getNew() {
-		Tweet firstTweet = TweetDao.getInstance().getFirstResult();
+		Tweet firstTweet = tweetDao.getFirstResult();
 		String sinceId = null;
 		if (firstTweet != null) {
 			sinceId = firstTweet.getId();
@@ -83,7 +86,7 @@ public class TwitterService {
 	}
 
 	public List<Tweet> getOld() {
-		Tweet lastTweet = TweetDao.getInstance().getFirstResultOrderByIdAsc();
+		Tweet lastTweet = tweetDao.getFirstResultOrderByIdAsc();
 		String maxId = null;
 		if (lastTweet != null) {
 			maxId = lastTweet.getId();
@@ -111,7 +114,7 @@ public class TwitterService {
 	private List<Tweet> saveTweets(List<Tweet> tweets) {
 		List<Tweet> newTweets = new ArrayList<>();
 		for (Tweet tweet : tweets) {
-			if (!tweet.isRetweet() && TweetDao.getInstance().createIfNotExists(tweet) > -1) {
+			if (!tweet.isRetweet() && tweetDao.createIfNotExists(tweet) > -1) {
 				newTweets.add(tweet);
 			}
 		}
@@ -120,8 +123,8 @@ public class TwitterService {
 
 	private List<Tweet> search(String sinceId, String maxId) {
 
-		if (!Utils.isOnline()) {
-			throw new ConnectionException();
+		if (!Utils.isOnline(context)) {
+			throw new ConnectionException(context);
 		}
 
 		try {
@@ -139,10 +142,8 @@ public class TwitterService {
 			}
 			encodedUrl += "&q=" + URLEncoder.encode(query, "UTF-8");
 
-			String apiKey = Activity.CURRENT_CONTEXT
-					.getString(R.string.twitter_api_key);
-			String apiSecret = Activity.CURRENT_CONTEXT
-					.getString(R.string.twitter_api_secret);
+			String apiKey = context.getString(R.string.twitter_api_key);
+			String apiSecret = context.getString(R.string.twitter_api_secret);
 
 			String urlApiKey = URLEncoder.encode(apiKey, "UTF-8");
 			String urlApiSecret = URLEncoder.encode(apiSecret, "UTF-8");
@@ -180,7 +181,7 @@ public class TwitterService {
 
 			return parseTweets(json);
 		} catch (Exception e) {
-			throw new TwitterConnectionException(e);
+			throw new TwitterConnectionException(e, context);
 		}
 	}
 
@@ -193,10 +194,10 @@ public class TwitterService {
 					return jsonObject.getString("access_token");
 				}
 			} catch (JSONException e) {
-				throw new TwitterConnectionException(e);
+				throw new TwitterConnectionException(e, context);
 			}
 		}
-		throw new TwitterConnectionException();
+		throw new TwitterConnectionException(context);
 	}
 
 	private List<Tweet> parseTweets(String json) {
@@ -231,7 +232,7 @@ public class TwitterService {
 			}
 			return tweets;
 		} catch (JSONException e) {
-			throw new TwitterConnectionException(e);
+			throw new TwitterConnectionException(e, context);
 		}
 	}
 
@@ -242,7 +243,7 @@ public class TwitterService {
 			sf.setLenient(true);
 			return sf.parse(date);
 		} catch (ParseException e) {
-			throw new TwitterConnectionException(e);
+			throw new TwitterConnectionException(e, context);
 		}
 	}
 

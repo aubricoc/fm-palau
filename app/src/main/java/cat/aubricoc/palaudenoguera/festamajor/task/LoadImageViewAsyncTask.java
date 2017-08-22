@@ -1,26 +1,26 @@
 package cat.aubricoc.palaudenoguera.festamajor.task;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.canteratech.androidutils.IOUtils;
-import com.canteratech.androidutils.Utils;
 
 import java.io.ByteArrayInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import cat.aubricoc.palaudenoguera.festamajor.utils.Constants;
+import cat.aubricoc.palaudenoguera.festamajor.utils.IOUtils;
+import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
 
 public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 
 	private final ImageView imageView;
-
 	private final OnReceivedImageListener onReceivedImageListener;
+	private Context context;
 
-	public LoadImageViewAsyncTask(ImageView imageView, OnReceivedImageListener onReceivedImageListener) {
+	public LoadImageViewAsyncTask(Context context, ImageView imageView, OnReceivedImageListener onReceivedImageListener) {
 		this.imageView = imageView;
 		this.onReceivedImageListener = onReceivedImageListener;
 	}
@@ -33,7 +33,7 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 	@Override
 	protected byte[] doInBackground(String... params) {
 
-		if (!Utils.isOnline()) {
+		if (!Utils.isOnline(context)) {
 			return null;
 		}
 

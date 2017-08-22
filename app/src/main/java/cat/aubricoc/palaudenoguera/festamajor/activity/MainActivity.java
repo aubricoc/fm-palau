@@ -7,22 +7,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 
-import com.canteratech.androidutils.Activity;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cat.aubricoc.palaudenoguera.festamajor.fragment.ScheduleFragment;
 import cat.aubricoc.palaudenoguera.festamajor.fragment.TwitterFragment;
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void showInfo() {
-		Dialog dialog = new Dialog(Activity.CURRENT_CONTEXT);
+		Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setCancelable(true);
 		dialog.setContentView(R.layout.dialog_info);

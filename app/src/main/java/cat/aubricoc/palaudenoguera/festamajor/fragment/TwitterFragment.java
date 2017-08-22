@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.canteratech.androidutils.Activity;
-
 import java.util.List;
 
 import cat.aubricoc.palaudenoguera.festamajor.adapter.TwitterListAdapter;
@@ -21,7 +19,7 @@ import cat.aubricoc.palaudenoguera.festamajor.exception.ConnectionException;
 import cat.aubricoc.palaudenoguera.festamajor.model.DataContainer;
 import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.service.TwitterService;
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 public class TwitterFragment extends Fragment {
 
@@ -29,10 +27,14 @@ public class TwitterFragment extends Fragment {
 
 	private TwitterListAdapter listAdapter;
 
+	private TwitterService twitterService;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 
+		twitterService = TwitterService.newInstance(getContext());
+		
 		View rootView = inflater.inflate(R.layout.fragment_twitter, container,
 				false);
 
@@ -76,12 +78,12 @@ public class TwitterFragment extends Fragment {
 		List<Tweet> tweets = DataContainer.getTweets();
 		boolean searchNew = false;
 		if (tweets.isEmpty()) {
-			tweets = TwitterService.getInstance().getAll();
+			tweets = twitterService.getAll();
 			DataContainer.setTweets(tweets);
 			searchNew = true;
 		}
 
-		listAdapter = new TwitterListAdapter(tweets);
+		listAdapter = new TwitterListAdapter(getContext(), tweets);
 		recyclerView.setAdapter(listAdapter);
 
 //		recyclerView.setOnItemClickListener(new OnItemClickListener() {
@@ -125,13 +127,13 @@ public class TwitterFragment extends Fragment {
 		protected void onPostExecute(List<Tweet> result) {
 			if (result == null) {
 				if (DataContainer.getTweets().isEmpty()) {
-					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.twitter_connection_error, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), R.string.twitter_connection_error, Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(Activity.CURRENT_CONTEXT, error, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
 				}
 			} else {
 				if (DataContainer.getTweets().isEmpty() && result.isEmpty()) {
-					Toast.makeText(Activity.CURRENT_CONTEXT, R.string.no_tweets, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), R.string.no_tweets, Toast.LENGTH_SHORT).show();
 				}
 				addTweets(result);
 				listAdapter.notifyDataSetChanged();
@@ -140,7 +142,7 @@ public class TwitterFragment extends Fragment {
 		}
 
 		List<Tweet> searchTweets() {
-			return TwitterService.getInstance().getNew();
+			return twitterService.getNew();
 		}
 
 		void addTweets(List<Tweet> result) {
@@ -155,7 +157,7 @@ public class TwitterFragment extends Fragment {
 
 		@Override
 		List<Tweet> searchTweets() {
-			return TwitterService.getInstance().getOld();
+			return twitterService.getOld();
 		}
 
 		@Override

@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':android-persistence-api-1.5.0'

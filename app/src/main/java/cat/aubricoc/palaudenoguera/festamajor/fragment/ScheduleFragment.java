@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.canteratech.androidutils.IOUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -16,7 +15,8 @@ import java.util.List;
 import cat.aubricoc.palaudenoguera.festamajor.adapter.ScheduleDaysListAdapter;
 import cat.aubricoc.palaudenoguera.festamajor.model.Day;
 import cat.aubricoc.palaudenoguera.festamajor.model.Schedule;
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import cat.aubricoc.palaudenoguera.festamajor.utils.IOUtils;
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 public class ScheduleFragment extends Fragment {
 
@@ -26,7 +26,7 @@ public class ScheduleFragment extends Fragment {
 
 		ViewGroup scheduleList = (ViewGroup) view.findViewById(R.id.schedule_list);
 		List<Day> days = readDays();
-		new ScheduleDaysListAdapter(scheduleList, days);
+		new ScheduleDaysListAdapter(getContext(), scheduleList, days);
 
 		return view;
 	}

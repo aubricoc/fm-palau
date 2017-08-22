@@ -1,5 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -13,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.canteratech.androidutils.Activity;
-
 import java.util.Date;
 import java.util.List;
 
@@ -24,14 +23,18 @@ import cat.aubricoc.palaudenoguera.festamajor.model.Tweet;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 import cat.aubricoc.palaudenoguera.festamajor.task.LoadImageViewAsyncTask;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.Holder> {
 
 	private final List<Tweet> tweets;
+	private Context context;
+	private TwitterUserDao twitterUserDao;
 
-	public TwitterListAdapter(List<Tweet> tweets) {
+	public TwitterListAdapter(Context context, List<Tweet> tweets) {
+		this.context = context;
 		this.tweets = tweets;
+		this.twitterUserDao = TwitterUserDao.newInstance(context);
 	}
 
 	@Override
@@ -42,24 +45,24 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 
 	@Override
 	public void onBindViewHolder(Holder holder, int position) {
-		holder.card.setCardBackgroundColor(Utils.getComplementaryColor(position));
+		holder.card.setCardBackgroundColor(Utils.getComplementaryColor(context, position));
 		final Tweet tweet = tweets.get(position);
 		Drawable image = tweet.getImage();
 		if (image == null) {
 			if (DataContainer.getUserTwitterImages().isEmpty()) {
-				DataContainer.prepareTwitterUserImages();
+				DataContainer.prepareTwitterUserImages(context);
 			}
 			image = DataContainer.getUserTwitterImages().get(tweet.getAlias());
 		}
 
 		if (image == null) {
-			new LoadImageViewAsyncTask(holder.userImage, new LoadImageViewAsyncTask.OnReceivedImageListener() {
+			new LoadImageViewAsyncTask(context, holder.userImage, new LoadImageViewAsyncTask.OnReceivedImageListener() {
 				@Override
 				public void onReceivedImage(byte[] image, Drawable drawable) {
 					TwitterUser twitterUser = new TwitterUser();
 					twitterUser.setAlias(tweet.getAlias());
 					twitterUser.setImage(image);
-					TwitterUserDao.getInstance().createIfNotExists(twitterUser);
+					twitterUserDao.createIfNotExists(twitterUser);
 					tweet.setImage(drawable);
 					DataContainer.getUserTwitterImages().put(tweet.getAlias(), drawable);
 				}
@@ -97,7 +100,7 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 			result = "" + (diffSegs / (60 * 60));
 			result += !result.equals("1") ? " hrs" : " hr";
 		} else {
-			result = DateFormat.getDateFormat(Activity.CURRENT_CONTEXT).format(date);
+			result = DateFormat.getDateFormat(context).format(date);
 		}
 		return result;
 	}
@@ -129,7 +132,7 @@ public class TwitterListAdapter extends RecyclerView.Adapter<TwitterListAdapter.
 				public void onClick(View v) {
 					Tweet tweet = (Tweet) v.getTag();
 					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet.getLink()));
-					Activity.CURRENT_CONTEXT.startActivity(intent);
+					context.startActivity(intent);
 				}
 			});
 		}

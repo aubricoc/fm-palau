@@ -1,5 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.model;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import java.io.ByteArrayInputStream;
@@ -28,8 +29,8 @@ public class DataContainer {
 		return userTwitterImages;
 	}
 
-	public static void prepareTwitterUserImages() {
-		List<TwitterUser> twitterUsers = TwitterUserDao.getInstance().getAll();
+	public static void prepareTwitterUserImages(Context context) {
+		List<TwitterUser> twitterUsers = TwitterUserDao.newInstance(context).getAll();
 		for (TwitterUser user : twitterUsers) {
 			Drawable drawable = Drawable.createFromStream(new ByteArrayInputStream(user.getImage()), null);
 			userTwitterImages.put(user.getAlias(), drawable);

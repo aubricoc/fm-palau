@@ -1,20 +1,19 @@
 package cat.aubricoc.palaudenoguera.festamajor.dao;
 
+import android.content.Context;
+
+import com.canteratech.apa.Dao;
+
 import cat.aubricoc.palaudenoguera.festamajor.db.DatabaseHelper;
 import cat.aubricoc.palaudenoguera.festamajor.model.TwitterUser;
 
-import com.canteratech.androidutils.Activity;
-import com.canteratech.apa.Dao;
-
 public class TwitterUserDao extends Dao<TwitterUser, String> {
 
-	private static final TwitterUserDao INSTANCE = new TwitterUserDao();
-
-	private TwitterUserDao() {
-		super(new DatabaseHelper(Activity.CURRENT_CONTEXT), TwitterUser.class);
+	private TwitterUserDao(Context context) {
+		super(new DatabaseHelper(context), TwitterUser.class);
 	}
 
-	public static TwitterUserDao getInstance() {
-		return INSTANCE;
+	public static TwitterUserDao newInstance(Context context) {
+		return new TwitterUserDao(context);
 	}
 }

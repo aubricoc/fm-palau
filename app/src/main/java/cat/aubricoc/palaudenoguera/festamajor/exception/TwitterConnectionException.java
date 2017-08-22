@@ -1,16 +1,18 @@
 package cat.aubricoc.palaudenoguera.festamajor.exception;
 
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import android.content.Context;
+
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 public class TwitterConnectionException extends ConnectionException {
 
 	private static final long serialVersionUID = 1L;
 
-	public TwitterConnectionException() {
-		this(null);
+	public TwitterConnectionException(Context context) {
+		this(null, context);
 	}
 
-	public TwitterConnectionException(Throwable cause) {
-		super(cause, R.string.twitter_connection_error);
+	public TwitterConnectionException(Throwable cause, Context context) {
+		super(cause, context.getString(R.string.twitter_connection_error));
 	}
 }

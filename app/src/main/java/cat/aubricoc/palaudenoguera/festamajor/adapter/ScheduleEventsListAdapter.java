@@ -1,5 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,16 @@ import java.util.List;
 
 import cat.aubricoc.palaudenoguera.festamajor.model.Event;
 import cat.aubricoc.palaudenoguera.festamajor.model.Show;
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 class ScheduleEventsListAdapter {
 
 	private final ViewGroup container;
-
 	private final List<Event> events;
+	private Context context;
 
-	public ScheduleEventsListAdapter(ViewGroup container, List<Event> events) {
+	public ScheduleEventsListAdapter(Context context, ViewGroup container, List<Event> events) {
+		this.context = context;
 		this.container = container;
 		this.events = events;
 		notifyDataSetChanged();
@@ -65,7 +67,7 @@ class ScheduleEventsListAdapter {
 			description = (TextView) view.findViewById(R.id.schedule_event_description);
 
 			ViewGroup showsView = (ViewGroup) view.findViewById(R.id.schedule_event_shows);
-			showsAdapter = new ScheduleShowsListAdapter(showsView, shows);
+			showsAdapter = new ScheduleShowsListAdapter(context, showsView, shows);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +13,16 @@ import java.util.List;
 import cat.aubricoc.palaudenoguera.festamajor.model.Day;
 import cat.aubricoc.palaudenoguera.festamajor.model.Event;
 import cat.aubricoc.palaudenoguera.festamajor.utils.Utils;
-import cat.aubricoc.palaudenoguera.festamajor2016.R;
+import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 public class ScheduleDaysListAdapter {
 
 	private final ViewGroup container;
-
 	private final List<Day> days;
+	private Context context;
 
-	public ScheduleDaysListAdapter(ViewGroup container, List<Day> days) {
+	public ScheduleDaysListAdapter(Context context, ViewGroup container, List<Day> days) {
+		this.context = context;
 		this.container = container;
 		this.days = days;
 		notifyDataSetChanged();
@@ -43,7 +45,7 @@ public class ScheduleDaysListAdapter {
 	}
 
 	private void onBindViewHolder(Holder holder, Day day, int position) {
-		holder.card.setCardBackgroundColor(Utils.getComplementaryColor(position));
+		holder.card.setCardBackgroundColor(Utils.getComplementaryColor(context, position));
 		holder.date.setText(day.getDate());
 		holder.events.clear();
 		holder.events.addAll(day.getEvents());
@@ -65,7 +67,7 @@ public class ScheduleDaysListAdapter {
 			date = (TextView) view.findViewById(R.id.schedule_date);
 
 			ViewGroup showsView = (ViewGroup) view.findViewById(R.id.schedule_events);
-			eventsAdapter = new ScheduleEventsListAdapter(showsView, events);
+			eventsAdapter = new ScheduleEventsListAdapter(context, showsView, events);
 		}
 	}
 }
