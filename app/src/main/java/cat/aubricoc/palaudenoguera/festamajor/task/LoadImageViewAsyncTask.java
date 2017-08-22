@@ -21,6 +21,7 @@ public class LoadImageViewAsyncTask extends AsyncTask<String, Void, byte[]> {
 	private Context context;
 
 	public LoadImageViewAsyncTask(Context context, ImageView imageView, OnReceivedImageListener onReceivedImageListener) {
+		this.context = context;
 		this.imageView = imageView;
 		this.onReceivedImageListener = onReceivedImageListener;
 	}
