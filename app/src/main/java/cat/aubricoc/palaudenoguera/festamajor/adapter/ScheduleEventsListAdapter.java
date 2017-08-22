@@ -1,6 +1,7 @@
 package cat.aubricoc.palaudenoguera.festamajor.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +42,22 @@ class ScheduleEventsListAdapter {
 	}
 
 	private void onBindViewHolder(Holder holder, Event event) {
-		holder.time.setText(event.getTime());
-		holder.name.setText(event.getName());
-		holder.description.setText(event.getDescription());
+		setText(holder.time, event.getTime(), "00:00");
+		setText(holder.name, event.getName(), null);
+		setText(holder.description, event.getDescription(), null);
 		holder.shows.clear();
 		holder.shows.addAll(event.getShows());
 		holder.showsAdapter.notifyDataSetChanged();
+	}
+
+	private void setText(TextView textView, String text, String defaultText) {
+		if (TextUtils.isEmpty(text)) {
+			textView.setVisibility(TextUtils.isEmpty(defaultText) ? View.GONE : View.INVISIBLE);
+			textView.setText(defaultText);
+		} else {
+			textView.setVisibility(View.VISIBLE);
+			textView.setText(text);
+		}
 	}
 
 	class Holder {

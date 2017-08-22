@@ -1,5 +1,6 @@
 package cat.aubricoc.palaudenoguera.festamajor.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
@@ -10,7 +11,7 @@ public class Event {
 
 	private String description;
 
-	private List<Show> shows;
+	private List<Show> shows = new ArrayList<>();
 
 	public String getTime() {
 		return time;

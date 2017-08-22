@@ -1,67 +1,76 @@
 {
   "days": [
     {
-      "date": "Divendres, 26 d\u0027agost",
+	  "date": "Divendres, 25 d\u0027agost",
       "events": [
         {
-          "description": "(venda de tiquets a la Comissió)",
+		  "description": "(venda de tiquets per la Comissió)",
           "name": "Sopar del jovent",
-          "shows": [],
           "time": "22:00"
         },
         {
-          "description": "amb",
-          "name": "NIT JOVE",
-          "shows": [
-            {
-              "name": "NO FOTIS"
-            },
-            {
-              "name": "<small>Batucada Diables de les Corts</small>"
-            },
-            {
-              "name": "DJ Duranium"
-            }
-          ],
-          "time": "01:00"
-        }
+		  "description": "amb",
+		  "name": "NIT JOVE",
+		  "shows": [
+			{
+			  "name": "OfftheRecordsRocks"
+			}
+		  ],
+		  "time": "01:00"
+		},
+		{
+		  "shows": [
+			{
+			  "name": "DjLuso"
+			}
+		  ],
+		  "time": "03:00"
+		}
       ]
     },
     {
-      "date": "Dissabte, 27 d\u0027agost",
+	  "date": "Dissabte, 26 d\u0027agost",
       "events": [
         {
-          "description": "i altres activitats",
-          "name": "MASTERCLASS DE ZUMBA",
+		  "description": "",
+		  "name": "Activitats i MASTERCLASS DE ZUMBA",
           "shows": [],
           "time": "18:30"
-        },
-        {
-          "description": "(obert de dilluns a dissabte de 18:00 a 21:00, i diumenge de 12:00 a 14:00)",
-          "name": "Inauguració de les exposicions de manualitats",
-          "shows": [],
-          "time": ""
         },
         {
           "description": "amb",
           "name": "Ball de Festa Major",
           "shows": [
             {
-              "name": "ALTEA TRIO"
-            },
-            {
-              "name": "ELS OLD STAR"
-            },
-            {
-              "name": "DJLUSO"
+			  "name": "VORALMAR"
             }
           ],
           "time": "23:30"
+		},
+		{
+		  "description": "amb",
+		  "name": "NIT DE ROCK",
+		  "shows": [
+			{
+			  "name": "CONTRABAND"
+			}
+		  ],
+		  "time": "02:30"
+		},
+		{
+		  "description": "amb",
+		  "name": "Fi de festa",
+		  "shows": [
+			{
+			  "name": "DJ Bacardit"
+			}
+		  ],
+		  "time": ""
         }
       ]
     },
     {
-      "date": "Diumenge, 28 d\u0027agost",
+	  "date": "Diumenge, 27 d\u0027agost",
       "events": [
         {
           "name": "Missa de Festa Major",
@@ -69,12 +78,12 @@
           "time": "13:00"
         },
         {
-          "name": "Gran Plega",
+		  "name": "Gran plega",
           "shows": [],
           "time": "14:00"
         },
         {
-          "description": "Durant el ball es realitzarà la ballada del Contrapàs de Palau de Noguera",
+		  "description": "Durant el ball de tarda es realitzarà la ballada del Contrapàs de Palau de Noguera",
           "name": "Lluït ball de tarda",
           "shows": [
             {
@@ -86,7 +95,7 @@
       ]
     },
     {
-      "date": "Dilluns, 29 d\u0027agost",
+	  "date": "Dimarts, 29 d\u0027agost",
       "events": [
         {
           "name": "Missa solemne en honor a Sant Joan Baptista",
