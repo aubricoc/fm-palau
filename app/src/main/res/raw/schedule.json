@@ -32,9 +32,7 @@
 	  "date": "Dissabte, 26 d\u0027agost",
       "events": [
         {
-		  "description": "",
 		  "name": "Activitats i MASTERCLASS DE ZUMBA",
-          "shows": [],
           "time": "18:30"
         },
         {
@@ -64,8 +62,7 @@
 			{
 			  "name": "DJ Bacardit"
 			}
-		  ],
-		  "time": ""
+		  ]
         }
       ]
     },
@@ -74,16 +71,14 @@
       "events": [
         {
           "name": "Missa de Festa Major",
-          "shows": [],
           "time": "13:00"
         },
         {
 		  "name": "Gran plega",
-          "shows": [],
           "time": "14:00"
         },
         {
-		  "description": "Durant el ball de tarda es realitzarà la ballada del Contrapàs de Palau de Noguera",
+		  "description": "amb",
           "name": "Lluït ball de tarda",
           "shows": [
             {
@@ -91,7 +86,10 @@
             }
           ],
           "time": "19:30"
-        }
+		},
+		{
+		  "description": "Durant el ball de tarda es realitzarà la ballada del Contrapàs de Palau de Noguera"
+		}
       ]
     },
     {
@@ -99,17 +97,14 @@
       "events": [
         {
           "name": "Missa solemne en honor a Sant Joan Baptista",
-          "shows": [],
           "time": "12:00"
         },
         {
           "name": "Cucanyes per la canalla",
-          "shows": [],
           "time": "17:00"
         },
         {
           "name": "Sopar de Germanor",
-          "shows": [],
           "time": "22:00"
         },
         {

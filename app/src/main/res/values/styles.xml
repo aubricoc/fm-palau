@@ -15,34 +15,28 @@
 
     <style name="text_card">
         <item name="android:textSize">@dimen/text_size_normal</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textColor">@color/white</item>
+		<item name="android:fontFamily">sans-serif</item>
+		<item name="android:textColor">@color/text_black</item>
     </style>
 
     <style name="text_card_title" parent="@style/text_card">
         <item name="android:textSize">@dimen/text_size_big</item>
     </style>
 
-    <style name="text_card_title_low" parent="@style/text_card">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
     <style name="text_card_side" parent="@style/text_card">
-        <item name="android:fontFamily">sans-serif-thin</item>
+		<item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="text_card_content" parent="@style/text_card">
     </style>
 
     <style name="text_card_low" parent="@style/text_card">
-        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_small</item>
+		<item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="text_card_great" parent="@style/text_card">
         <item name="android:textSize">@dimen/text_size_great</item>
-        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FM Palau 16</string>
-    <string name="app_title">Palau de Noguera 2016</string>
-    <string name="app_name_large">Festa Major Palau de Noguera 2016</string>
+    <string name="app_name">FM Palau 17</string>
+    <string name="app_title">Palau de Noguera 2017</string>
+    <string name="app_name_large">Festa Major Palau de Noguera 2017</string>
     <string name="hashtag">#palaueslaclau</string>
     <string name="title_programa">Programa</string>
     <string name="title_twitter">Twitter</string>
