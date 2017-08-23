@@ -9,28 +9,15 @@ import cat.aubricoc.palaudenoguera.festamajor2017.R;
 
 public class Utils {
 
+	private static int[] COMPLEMENTARY_COLORS = {
+			R.color.complementary_1,
+			R.color.complementary_2,
+			R.color.complementary_3,
+			R.color.complementary_4
+	};
+
 	public static int getComplementaryColor(Context context, int position) {
-		int color = 0;
-		switch (position % 6) {
-			case 0:
-				color = R.color.complementary_1;
-				break;
-			case 1:
-				color = R.color.complementary_2;
-				break;
-			case 2:
-				color = R.color.complementary_3;
-				break;
-			case 3:
-				color = R.color.complementary_4;
-				break;
-			case 4:
-				color = R.color.complementary_5;
-				break;
-			case 5:
-				color = R.color.complementary_6;
-				break;
-		}
+		int color = COMPLEMENTARY_COLORS[position % COMPLEMENTARY_COLORS.length];
 		return ContextCompat.getColor(context, color);
 	}
 

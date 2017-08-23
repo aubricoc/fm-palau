@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#d85c42</color>
-    <color name="secondary">#93000F</color>
+	<color name="primary">#fffafafa</color>
+	<color name="secondary">#80151D</color>
     <color name="primary_dark">#93000F</color>
 
-	<color name="complementary_1">#DD7799BB</color>
-	<color name="complementary_2">#DD77BB99</color>
-	<color name="complementary_3">#DD9977BB</color>
-	<color name="complementary_4">#DD99BB77</color>
-	<color name="complementary_5">#DDBB7799</color>
-	<color name="complementary_6">#DDBB9977</color>
+	<color name="complementary_1">#777E8835</color>
+	<color name="complementary_2">#77CE7E26</color>
+	<color name="complementary_3">#775B93CE</color>
+	<color name="complementary_4">#77A42C49</color>
 
     <color name="grey_50">#fffafafa</color>
-    <color name="black">#de000000</color>
     <color name="white">#b3ffffff</color>
 	<color name="text_black">#444444</color>
 </resources>

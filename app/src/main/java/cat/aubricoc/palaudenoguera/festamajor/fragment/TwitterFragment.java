@@ -44,7 +44,7 @@ public class TwitterFragment extends Fragment {
 		final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
 
-		refreshLayout.setColorSchemeResources(R.color.primary, R.color.secondary, R.color.primary, R.color.secondary);
+		refreshLayout.setColorSchemeResources(R.color.primary_dark, R.color.secondary, R.color.primary_dark, R.color.secondary);
 
 		refreshLayout.setOnRefreshListener(new OnRefreshListener() {
 			@Override
@@ -85,17 +85,6 @@ public class TwitterFragment extends Fragment {
 
 		listAdapter = new TwitterListAdapter(getContext(), tweets);
 		recyclerView.setAdapter(listAdapter);
-
-//		recyclerView.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//									int position, long id) {
-//				Tweet tweet = listAdapter.getItem(position);
-//				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet
-//						.getLink()));
-//				startActivity(intent);
-//			}
-//		});
 
 		if (searchNew) {
 			new GetNewTweetsTask().execute();

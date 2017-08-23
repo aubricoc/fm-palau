@@ -4,14 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/grey_50"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:navigationIcon="@drawable/ic_action_about"
-        app:title="@string/info" />
+        android:background="@android:color/transparent"
+        app:navigationIcon="@drawable/ic_info_outline_black_24dp"
+        app:title="@string/info"
+        app:titleTextColor="@color/text_black"/>
 
     <TextView
         android:id="@+id/info_text"

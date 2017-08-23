@@ -1,7 +1,8 @@
 <resources>
     <dimen name="margin">32dp</dimen>
-    <dimen name="text_size_normal">32sp</dimen>
-    <dimen name="text_size_small">28sp</dimen>
-    <dimen name="text_size_big">40sp</dimen>
-    <dimen name="text_size_great">48sp</dimen>
+	<dimen name="text_size_normal">42sp</dimen>
+	<dimen name="text_size_small">32sp</dimen>
+	<dimen name="text_size_big">54sp</dimen>
+	<dimen name="text_size_great">64sp</dimen>
+	<dimen name="toolbar_height">200dp</dimen>
 </resources>
